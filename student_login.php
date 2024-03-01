@@ -3,7 +3,7 @@
   ?>
 
   <div class="login-container">
-    <h2 class="text-center">cheehong Login</h2>
+    <h2 class="text-center">LimYONGKHN Login</h2>
     <form id="loginForm" action="Login.php" method="POST">
       <div class="form-group">
         <label for="username">Student Code:</label>
