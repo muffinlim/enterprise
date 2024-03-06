@@ -5,12 +5,33 @@
 
   include('../Header/head.php');
   include('../Header/header.html');
+
+  if(isset($_POST['submit']))
+{
+
+  $name=$_POST['username'];
+  $email=$_POST['email'];
+  $password=$_POST['password'];
+  $usertype=$_POST['usertype'];
+
+  
+  $conn = mysqli_connect("localhost","root","","etutor_database");
+  $sql = "INSERT INTO users(username, email, password, user_type_id) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', 
+   '" . $usertype . "')";
+       mysqli_query($conn, $sql);
+	  
+	  echo "<script>alert('success');</script>";
+  
+
+  
+}
 ?>
+
 <body>
 <div class="admin-container mt-4">
 <h2>Admin - Register User</h2>
 
-    <form id="registrationForm">
+    <form id="registrationForm" method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
 
@@ -27,7 +48,7 @@
         <!-- Add more user types as needed -->
       </select>
 
-      <button type="button" onclick="registerUser()">Register User</button>
+      <button type="submit" name="submit" id="submit">sign up</button>
     </form>
 
 </div>
