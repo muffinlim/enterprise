@@ -24,7 +24,7 @@ exit();
   ?>
 
   <div class="login-container">
-    <h2 class="text-center">Admin Login</h2>
+    <h2 class="text-center">i am gay </h2>
     <form id="loginForm" action="Login.php" method="POST">
       <div class="form-group">
         <label for="username">Admin ID:</label>
