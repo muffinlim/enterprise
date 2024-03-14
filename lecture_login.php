@@ -1,5 +1,26 @@
 <?php 
     include('LoginHeader.php');
+
+    if(isset($_POST['login']))
+{
+   $lecture_login_id=$_POST['lecture_login_id'];
+   $password=$_POST['password'];
+$query=mysqli_query($con,"SELECT * FROM lecturer WHERE Lecturer_Login_Id='$lecture_login_id' and Lecturer_Password='$password'");
+$num=mysqli_fetch_array($query);
+if($num>0)
+{
+
+header("location:dashboard.php");
+exit();
+}
+else
+{
+
+header("location:lecture_login.php");
+
+exit();
+}
+}
   ?>
 
   <div class="login-container">
@@ -14,7 +35,7 @@
         <input type="password" class="form-control" id="password" name="password" required>
       </div>
       
-      <input type="submit" value="Login" class="btn btn-primary btn-block">
+      <button type="submit" name="submit" class="btn btn-primary btn-block" name="login">log in</button>
     </form>
   </div>
 </body>
