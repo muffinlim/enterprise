@@ -1,6 +1,6 @@
 <?php 
     include('LoginHeader.php');
-
+    include('DatabaseConnection.php');
     if(isset($_POST['login']))
 {
    $lecture_login_id=$_POST['lecture_login_id'];

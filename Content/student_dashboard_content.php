@@ -1,5 +1,14 @@
 
+<?php
 
+  $pageTitle = "Dashboard";
+  $customCssFile = '../Styles/dashboard.css';
+  
+
+  include('../Header/head.php');
+  include('../Header/header.html');
+  
+?>
 <h2>Dashboard</h2>
 
 <div class="row">
