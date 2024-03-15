@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     if($num>0)
     {
     echo "Student Dashboard";
-    header("location:student_dashboard_content.php");
+    // header("location:student_dashboard_content.php");
     exit();
     }
     else
