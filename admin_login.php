@@ -24,11 +24,8 @@ exit();
   ?>
 
   <div class="login-container">
-<<<<<<< Updated upstream
     <h2 class="text-center">Admin Login</h2>
-=======
     <h2 class="text-center">Hong sheng is gay</h2>
->>>>>>> Stashed changes
     <form id="loginForm" action="Login.php" method="POST">
       <div class="form-group">
         <label for="username">Admin ID:</label>
