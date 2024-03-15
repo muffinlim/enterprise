@@ -1,6 +1,7 @@
 <?php
 session_start();
 if($_SERVER["REQUEST_METHOD"]=="POST"){
+<<<<<<< Updated upstream
     $username = $_POST["username"];
     $password = $_POST["password"];
     $user_type_id = $_POST["usertype"];
@@ -14,6 +15,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 
     if($conn -> connect_error){
         die("Connection Failed: ". $conn -> connect_error);
+=======
+   
+   
+      $Student_Login_Id = $_POST["Student_Login_Id"];
+      $Student_Password = $_POST["Student_Password"];
+    $query=mysqli_query($conn,"SELECT * FROM student WHERE Student_Login_Id='$Student_Login_Id' and Student_Password='$Student_Password'");
+    $num=mysqli_fetch_array($query);
+    if($num>0)
+    {
+    echo "Student Dashboard";
+    // header("location:student_dashboard_content.php");
+    exit();
+>>>>>>> Stashed changes
     }
 
     $query = "SELECT * FROM users WHERE username = ? AND password = ? AND user_type_id = ?";
