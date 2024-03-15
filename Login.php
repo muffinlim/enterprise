@@ -10,14 +10,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $num=mysqli_fetch_array($query);
     if($num>0)
     {
-    echo "Student Dashboard";
-<<<<<<< Updated upstream
+    echo "Student Dashboard1";
     // header("location:student_dashboard_content.php");
-=======
-    header("location:student_dashboard_content.php");
->>>>>>> Stashed changes
+   
     exit();
     }
+
     else
     {
     
