@@ -10,8 +10,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
     $num=mysqli_fetch_array($query);
     if($num>0)
     {
-    echo "Student Dashboard1";
-    // header("location:student_dashboard_content.php");
+     header("location:../enterprise/Content/student_profile.php");
    
     exit();
     }

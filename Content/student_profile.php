@@ -1,8 +1,14 @@
+<!-- profile.php -->
 <?php
-include('../Header/head.php');
-include('../Header/header.html');
+  $pageTitle = "Profile";
+  $customCssFile = '../Styles/Studentprofile.css';
+
+  include('../Header/head.php');
+  include('../Header/student_navibar.html');
 ?>
-<div class="container">
+<body>
+<div class="profile-container mt-4">
+
 <form>
 <div class="form-group row">
     <label class="col-sm-2 col-form-label">Name</label>
@@ -29,6 +35,9 @@ include('../Header/header.html');
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary">Update</button>
     </div>
-  </div>
+
 </form>
 </div>
+</div>
+</body>
+</html>

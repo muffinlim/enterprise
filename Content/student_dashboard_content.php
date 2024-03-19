@@ -2,11 +2,10 @@
 <?php
 
   $pageTitle = "Dashboard";
-  $customCssFile = '../Styles/dashboard.css';
-  
+  $customCssFile = '../Styles/student_dashboard.css';
 
   include('../Header/head.php');
-  include('../Header/header.html');
+  include('../Header/student_navibar.html');
   
 ?>
 <h2>Dashboard</h2>

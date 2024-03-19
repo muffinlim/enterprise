@@ -11,6 +11,6 @@
   session_destroy();
 
   // Redirect to the login page
-  header("Location: Login.html");
+  header("Location: student_login.php");
   exit();
 ?>
