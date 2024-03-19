@@ -9,7 +9,7 @@ include('DatabaseConnection.php');
     <form id="loginForm" action="student_login_request.php" method="POST">
       <div class="form-group">
         <label for="username">Student Id:</label>
-        <input type="text" class="form-control" id="student_login_id" name="Student_Login_Id" placeholder="StudentCode">
+        <input type="text" class="form-control" id="student_login_id" name="Student_Login_Id" placeholder="StudentCode" required>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>

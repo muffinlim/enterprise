@@ -63,7 +63,7 @@ CREATE TABLE `lecturer` (
   `Program_Id` int(11) NOT NULL,
   `Lecturer_Login_Id` varchar(255) NOT NULL,
   `Lecturer_Password` varchar(255) NOT NULL,
-  `Name` varchar(255) NOT NULL,
+  `Lecturer_Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -71,7 +71,7 @@ CREATE TABLE `lecturer` (
 -- Dumping data for table `lecturer`
 --
 
-INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lecturer_Password`, `Name`, `Email`) VALUES
+INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lecturer_Password`, `Lecturer_Name`, `Email`) VALUES
 (1, 1, 'Lecturer', 'Lecturer', 'Lecturer 1', 'Lecturer@gmail.com');
 
 -- --------------------------------------------------------
@@ -81,9 +81,11 @@ INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lectu
 --
 
 CREATE TABLE `meeting` (
-  `Meetin_Id` int(11) NOT NULL,
+  `Meeting_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
   `Lecturer_Id` int(11) NOT NULL,
+  `Meeting_Start` time NOT NULL,
+  `Meeting_End` time NOT NULL,
   `Date` datetime NOT NULL,
   `Meetin_Link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -117,7 +119,7 @@ CREATE TABLE `student` (
   `Program_Id` int(11) NOT NULL,
   `Student_Login_Id` varchar(255) NOT NULL,
   `Student_Password` varchar(255) NOT NULL,
-  `Name` varchar(255) NOT NULL,
+  `Student_Name` varchar(255) NOT NULL,
   `Email` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -125,8 +127,8 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`Student_Id`, `Program_Id`, `Student_Login_Id`, `Student_Password`, `Name`, `Email`) VALUES
-(1, 1, 'Student', 'Student', 'Student 1', 'Student@gmail.com');
+INSERT INTO `student` (`Student_Id`, `Program_Id`, `Student_Login_Id`, `Student_Password`, `Student_Name`, `Email`) VALUES
+(1, 1, 'Student', 'Student', 'Student', 'tancheeHong@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -172,7 +174,7 @@ ALTER TABLE `lecturer`
 -- Indexes for table `meeting`
 --
 ALTER TABLE `meeting`
-  ADD PRIMARY KEY (`Meetin_Id`),
+  ADD PRIMARY KEY (`Meeting_Id`),
   ADD KEY `FK_Meeting_Student_Id` (`Student_Id`),
   ADD KEY `FK_Meeting_Lecturer_Id` (`Lecturer_Id`);
 
@@ -227,7 +229,7 @@ ALTER TABLE `lecturer`
 -- AUTO_INCREMENT for table `meeting`
 --
 ALTER TABLE `meeting`
-  MODIFY `Meetin_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Meeting_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `program`
@@ -284,3 +286,7 @@ ALTER TABLE `meeting`
 ALTER TABLE `student`
   ADD CONSTRAINT `FK_Student_Program_Id` FOREIGN KEY (`Program_Id`) REFERENCES `program` (`Program_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
