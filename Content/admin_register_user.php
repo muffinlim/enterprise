@@ -4,24 +4,34 @@
   $customCssFile = '../Styles/admin_register_user.css';
 
   include('../Header/head.php');
-  include('../Header/header.html');
+  include('../Header/admin_navibar.html');
+  include('../DatabaseConnection.php');
 
   if(isset($_POST['submit']))
 {
-
+  
+  $login_id=$_POST['login_id'];
   $name=$_POST['username'];
   $email=$_POST['email'];
   $password=$_POST['password'];
   $usertype=$_POST['usertype'];
-
+  $program=$_POST['program'];
+  if($usertype=="student"){
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+     
+  $sql = "INSERT INTO student (Program_Id,Student_Login_Id,Student_Password,Student_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
+      mysqli_query($conn, $sql);
+      echo "<script>alert('success');</script>";
+   
+ 
+  }else{
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $sql = "INSERT INTO lecturer (Program_Id,Lecturer_Login_Id,Lecturer_Password,Lecturer_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
+    mysqli_query($conn, $sql);
+    echo "<script>alert('success');</script>";
+  }
   
-  $conn = mysqli_connect("localhost","root","","etutor_database");
-  $sql = "INSERT INTO users(username, email, password, user_type_id) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', 
-   '" . $usertype . "')";
-       mysqli_query($conn, $sql);
-	  
-	  echo "<script>alert('success');</script>";
-  
+ 
 
   
 }
@@ -32,40 +42,40 @@
 <h2>Admin - Register User</h2>
 
     <form id="registrationForm" method="post">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" required>
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" required>
-
-      <label for="usertype">User Type:</label>
+ 
+    <label for="program">Program:</label>
+      <select id="program" name="program" required>
+        <option value="1">Business</option>
+        <option value="2">Computing</option>
+        <option value="3">Accounting </option>
+        <!-- Add more user types as needed -->
+      </select>
+    <label for="usertype">User Type:</label>
       <select id="usertype" name="usertype" required>
         <option value="student">Student</option>
         <option value="lecturer">Lecturer</option>
         <!-- Add more user types as needed -->
       </select>
 
-      <button type="submit" name="submit" id="submit">sign up</button>
+      <label for="username">Login Id:</label>
+      <input type="text" id="login_id" name="login_id" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      
+
+      <button type="submit" name="submit" id="submit">Register</button>
     </form>
 
 </div>
 
-<script>
-    function registerUser() {
-        var username = document.getElementById('username').value;
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-        var usertype = document.getElementById('usertype').value;
-        // You would send the credentials and usertype to the server for validation
-        // You can use AJAX to send a request to the server
-
-        // For demonstration purposes, let's just display an alert with the user type
-        alert('Login button clicked for ' + usertype + ': ' + username);
-    }
-  </script>
 
 </body>
 </html>
