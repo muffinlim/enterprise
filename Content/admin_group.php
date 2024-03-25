@@ -42,8 +42,12 @@
       <td><?php echo $row['Program_name'];?></td>
       <td><?php echo $row['Lecturer_Name'];?></td>
       <td>@mdo</td>
-      <td><a href="admin_edit_group.php?lecturer_id=<?php echo $row['Lecturer_Id'];?>&program_id=<?php echo $row['Program_Id']; ?>" style="font-size:15px">Edit <i class="fa fa-pencil-square-o"></i></a>
-</td>
+      <td><a href="admin_edit_group.php?lecturer_id=<?php echo $row['Lecturer_Id'];?>
+                   &lecturer_name=<?php echo $row['Lecturer_Name'];?>
+                   &program_id=<?php echo $row['Program_Id']; ?>
+                   &program_name=<?php echo $row['Program_name'];?>" style="font-size:15px">Edit <i class="fa fa-pencil-square-o"></i></a>
+                  
+                  </td>
       </tr>
   <?php 
      }

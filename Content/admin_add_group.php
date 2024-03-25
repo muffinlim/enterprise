@@ -14,13 +14,28 @@
   $program=$_POST['program'];
   $lecturer=$_POST['lecturer'];
   $student_list=$_POST['student_list'];
-  
-  foreach ($student_list as $student_id) {
+  $success = false; // Initialize the success flag
 
-    $sql="INSERT INTO group_student_lecturer (Student_Id,Lecturer_Id) VALUES('$student_id','$lecturer')";
-    mysqli_query($conn,$sql);
-  }
-  
+  foreach ($student_list as $student_id) {
+    // sql the student can just only assign to a lecturer
+    $sql2 = "SELECT * FROM group_student_lecturer WHERE Student_Id='$student_id'";
+    $result2 = mysqli_query($conn, $sql2);
+    if (mysqli_num_rows($result2) < 1) {
+        $sql = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer')";
+        if (mysqli_query($conn, $sql)) {
+            $success = true; 
+    } else {
+      $success = false; 
+    }
+}}
+// if the success is true mean the that allow to insert mean no ruplicate assign the student
+if ($success) {
+    echo "<script>alert('Group add successfull');</script>"; // Display success message if at least one successful insertion was made
+}else{
+  echo "<script>alert('Fail due to student have been in a group');</script>";
+}
+
+
 }
 ?>
 

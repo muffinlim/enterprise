@@ -4,6 +4,9 @@
   $customCssFile = '../Styles/admin_register_user.css';
   $lecturer_id=$_GET['lecturer_id'];
   $program_id=$_GET['program_id'];
+  $program_name=$_GET['program_name'];
+  $lecturer_name=$_GET['lecturer_name'];
+
   include('../Header/head.php');
   include('../Header/admin_navibar.html');
   include('../DatabaseConnection.php');
@@ -16,15 +19,17 @@
 
     <form id="registrationForm" method="post">
  
-    <label for="program">Program:</label>
+    <label for="program">Program: <?php echo $program_name;?></label>
  
     <label for="lecturer">Lecturer:</label>
       <select id="lecturer" name="lecturer" required>
+      <option value="<?php echo $lecturer_id; ?>" selected><?php echo $lecturer_name; ?></option>
+
       <?php
    $sql = "SELECT DISTINCT lecturer.Lecturer_Id, lecturer.Lecturer_Name 
    FROM lecturer 
    INNER JOIN program ON lecturer.Program_Id = program.Program_Id 
-   WHERE program.Program_Id = '$program_id'";
+   WHERE program.Program_Id = '$program_id' AND lecturer.Lecturer_Id!='$lecturer_id'";
 
     $result=mysqli_query($conn,$sql);           
         // Loop through each row in the result set
