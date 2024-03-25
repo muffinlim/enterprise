@@ -21,7 +21,6 @@
       <th scope="col">#</th>
       <th scope="col">Program</th>
       <th scope="col">Lecturer</th>
-      <th scope="col">Student</th>
       <th scope="col">Option</th>
     </tr>
   </thead>
@@ -41,7 +40,7 @@
       <th scope="row"><?php echo $count;?></th>
       <td><?php echo $row['Program_name'];?></td>
       <td><?php echo $row['Lecturer_Name'];?></td>
-      <td>@mdo</td>
+    
       <td><a href="admin_edit_group.php?lecturer_id=<?php echo $row['Lecturer_Id'];?>
                    &lecturer_name=<?php echo $row['Lecturer_Name'];?>
                    &program_id=<?php echo $row['Program_Id']; ?>

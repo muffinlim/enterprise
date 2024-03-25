@@ -22,13 +22,15 @@
   $sql = "INSERT INTO student (Program_Id,Student_Login_Id,Student_Password,Student_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
       mysqli_query($conn, $sql);
       echo "<script>alert('success');</script>";
-   
+      header("location:admin_account.php");
  
   }else{
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO lecturer (Program_Id,Lecturer_Login_Id,Lecturer_Password,Lecturer_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
     mysqli_query($conn, $sql);
+   
     echo "<script>alert('success');</script>";
+    header("location:admin_account.php");
   }
   
  

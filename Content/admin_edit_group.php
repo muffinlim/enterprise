@@ -41,18 +41,24 @@
     
     ?>
     </select>
+    
     <select name="student_list[]" multiple>
       <option disabled class="header">Student List</option>
       <?php
       $student_list=array();
 
-    $sql2="SELECT * FROM student WHERE student.Program_Id='$program_id'";
-    $result2=mysqli_fetch_assoc($sql2);
-    while($row=mysqli_fetch_assoc($result)){  
+    $sql2="SELECT student.*, lecturer.*, group_student_lecturer.*
+    FROM student
+    JOIN group_student_lecturer ON group_student_lecturer.Student_Id = student.Student_Id
+    JOIN lecturer ON group_student_lecturer.Lecturer_Id = lecturer.Lecturer_Id";
+    $result2=mysqli_query($conn,$sql2);
+    
+    while($row=mysqli_fetch_assoc($result2)){  
     ?>
-    <option value="<?php echo $row['Student_Id']?>"><?php echo $row['Student_Name'];?></option> 
+    <option value="<?php echo $row['Student_Id']?>" selected><?php echo $row['Student_Name'];?></option> 
     <?php 
     }
+    // $sql3="SELECT DISTINCT";
     ?>
     </select>
      

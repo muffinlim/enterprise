@@ -31,8 +31,10 @@
 // if the success is true mean the that allow to insert mean no ruplicate assign the student
 if ($success) {
     echo "<script>alert('Group add successfull');</script>"; // Display success message if at least one successful insertion was made
-}else{
+    header("location:admin_group.php");
+  }else{
   echo "<script>alert('Fail due to student have been in a group');</script>";
+  header("location:admin_group.php");
 }
 
 

@@ -37,7 +37,7 @@
   <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" value="<?php echo $studentData['Student_Password']?>" name="Password" id="inputPassword3" placeholder="Password">
+      <input type="password" class="form-control" name="Password" id="inputPassword3" placeholder="Password">
     </div>
   </div>
   <?php
