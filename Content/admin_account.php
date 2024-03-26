@@ -22,6 +22,7 @@
       <th scope="col">Program</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <th scope="col">Option</th>
     </tr>
   </thead>
   <tbody>
@@ -50,6 +51,7 @@ if (mysqli_num_rows($result) > 0) {
         <td><?php echo $row['ProgramName']; ?></td>
         <td><?php echo $row['Name']; ?></td>
         <td><?php echo $row['Email']; ?></td>
+        <td>edit button</td>
     </tr>
 <?php
     }

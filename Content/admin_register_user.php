@@ -17,20 +17,39 @@
   $usertype=$_POST['usertype'];
   $program=$_POST['program'];
   if($usertype=="student"){
+
+    // check the id ensure not repeat id can be use
+    $sql2="SELECT * FROM student WHERE Student_Login_Id='$login_id'";
+    $result2=mysqli_query($conn,$sql2);
+    if($result2->num_rows>0){
+      echo "<script>alert('Register Fail due to the login id have been used in student account ');</script>";
+    }else{
+
+    
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
      
   $sql = "INSERT INTO student (Program_Id,Student_Login_Id,Student_Password,Student_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
       mysqli_query($conn, $sql);
       echo "<script>alert('success');</script>";
       header("location:admin_account.php");
- 
+    }
   }else{
+
+    // check the id ensure not repeat id can be use
+    $sql2="SELECT * FROM lecturer WHERE Lecturer_Login_Id='$login_id'";
+    $result2=mysqli_query($conn,$sql2);
+    if($result2->num_rows>0){
+      echo "<script>alert('Register Fail due to the login id have been used in student account ');</script>";
+    }else{
+
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO lecturer (Program_Id,Lecturer_Login_Id,Lecturer_Password,Lecturer_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
     mysqli_query($conn, $sql);
    
     echo "<script>alert('success');</script>";
     header("location:admin_account.php");
+  }
   }
   
  
