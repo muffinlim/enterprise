@@ -17,8 +17,9 @@
 
 ?>
 <body>
-<div class="profile-container mt-4 ">
-
+<div class="container-md">
+<h2>Student - Profile Management</h2>
+<br>
 <form action="student_profile_request.php" method="POST" class="form_profile">
 <div class="form-group row">
     <label class="col-sm-2 col-form-label">Name</label>

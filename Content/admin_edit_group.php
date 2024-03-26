@@ -17,51 +17,46 @@
 <div class="admin-container mt-4">
 <h2>Admin - Edit Group</h2>
 
-    <form id="registrationForm" method="post">
+    <form id="registrationForm"  action="admin_edit_group_request.php" method="post">
  
     <label for="program">Program: <?php echo $program_name;?></label>
- 
-    <label for="lecturer">Lecturer:</label>
-      <select id="lecturer" name="lecturer" required>
-      <option value="<?php echo $lecturer_id; ?>" selected><?php echo $lecturer_name; ?></option>
-
-      <?php
-   $sql = "SELECT DISTINCT lecturer.Lecturer_Id, lecturer.Lecturer_Name 
-   FROM lecturer 
-   INNER JOIN program ON lecturer.Program_Id = program.Program_Id 
-   WHERE program.Program_Id = '$program_id' AND lecturer.Lecturer_Id!='$lecturer_id'";
-
-    $result=mysqli_query($conn,$sql);           
-        // Loop through each row in the result set
-        while ($row = mysqli_fetch_assoc($result)) {
-           ?>
-             <option value="<?php echo $row['Lecturer_Id']?>"><?php echo $row['Lecturer_Name'];?></option>
-           <?php
-        }
+    <input type="hidden" name="program_id" value="<?php echo $program_id;?>">
+  
+    <label for="lecturer">Lecturer: <?php echo $lecturer_name?></label>
+    <input type="hidden" name="lecturer_id" value="<?php echo $lecturer_id;?>">
     
-    ?>
-    </select>
-    
-    <select name="student_list[]" multiple>
+    <select name="student_list[]" multiple required>
       <option disabled class="header">Student List</option>
       <?php
-      $student_list=array();
+    // sql select the student belong to the lecturer
+    $sql2="SELECT * 
+    FROM group_student_lecturer 
+    INNER JOIN student ON group_student_lecturer.Student_Id = student.Student_Id 
+    WHERE group_student_lecturer.Lecturer_Id = '$lecturer_id'";
+  $result2=mysqli_query($conn,$sql2);
+    while($row=mysqli_fetch_assoc($result2)){ 
+         // hold one data  
+    $StudentList=$row['Student_Id'];
+    //pass the ta data hold by the studentList store into array
+    $StudentLists[]=$StudentList;
 
-    $sql2="SELECT student.*, lecturer.*, group_student_lecturer.*
-    FROM student
-    JOIN group_student_lecturer ON group_student_lecturer.Student_Id = student.Student_Id
-    JOIN lecturer ON group_student_lecturer.Lecturer_Id = lecturer.Lecturer_Id";
-    $result2=mysqli_query($conn,$sql2);
-    
-    while($row=mysqli_fetch_assoc($result2)){  
     ?>
     <option value="<?php echo $row['Student_Id']?>" selected><?php echo $row['Student_Name'];?></option> 
     <?php 
     }
-    // $sql3="SELECT DISTINCT";
+    $sql3="SELECT * FROM student WHERE Program_Id='$program_id'";
+    foreach($StudentLists as $Student_Id){
+    $sql3.="AND Student_Id!='$Student_Id'";
+  }
+    $result3=mysqli_query($conn,$sql3);
+    while($row=mysqli_fetch_assoc($result3)){
+?>
+  <option value="<?php echo $row['Student_Id']?>"><?php echo $row['Student_Name'];?></option> 
+<?php
+    }
+    
     ?>
     </select>
-     
       
     <button type="submit" name="submit" id="submit">Update List</button>
 

@@ -13,10 +13,12 @@
 <h2>Admin - Group Student / Lecturer</h2>
 <table class="table table-striped">
   <thead>
-  <div class="float-right">
+  
+  <!-- <div class="float-right">
     <a href="admin_add_group.php" class="btn btn-primary" style="font-size:10px">New Group <i class="fa fa-plus-circle"></i></a>
-</div>
-   <br><br>
+</div> -->
+  
+<br><br>
   <tr>
       <th scope="col">#</th>
       <th scope="col">Program</th>
@@ -40,11 +42,10 @@
       <th scope="row"><?php echo $count;?></th>
       <td><?php echo $row['Program_name'];?></td>
       <td><?php echo $row['Lecturer_Name'];?></td>
-    
-      <td><a href="admin_edit_group.php?lecturer_id=<?php echo $row['Lecturer_Id'];?>
+      <td><a   class="btn btn-primary" style="font-size:10px" href="admin_edit_group.php?lecturer_id=<?php echo $row['Lecturer_Id'];?>
                    &lecturer_name=<?php echo $row['Lecturer_Name'];?>
                    &program_id=<?php echo $row['Program_Id']; ?>
-                   &program_name=<?php echo $row['Program_name'];?>" style="font-size:15px">Edit <i class="fa fa-pencil-square-o"></i></a>
+                   &program_name=<?php echo $row['Program_name'];?>" style="font-size:15px">Manage <i class="fa fa-pencil-square-o"></i></a>
                   
                   </td>
       </tr>

@@ -17,12 +17,22 @@
   $usertype=$_POST['usertype'];
   $program=$_POST['program'];
   if($usertype=="student"){
+    
+    // check email ensure not email repeat use
+    $sqlCheckEmail="SELECT * FROM student WHERE Email ='$email'";
+    $resultCheckEmail = mysqli_query($conn, $sqlCheckEmail);
 
+// Check if the query returned more than one row
+if (mysqli_num_rows($resultCheckEmail) >= 1) {
+    echo "<script>alert('Register Fail due to email have been used for student');</script>";
+    }else{
+
+    
     // check the id ensure not repeat id can be use
     $sql2="SELECT * FROM student WHERE Student_Login_Id='$login_id'";
     $result2=mysqli_query($conn,$sql2);
     if($result2->num_rows>0){
-      echo "<script>alert('Register Fail due to the login id have been used in student account ');</script>";
+      echo "<script>alert('Register Fail due to the login id have been used in other student account ');</script>";
     }else{
 
     
@@ -33,9 +43,18 @@
       mysqli_query($conn, $sql);
       echo "<script>alert('success');</script>";
       header("location:admin_account.php");
-    }
-  }else{
+    }}
 
+  }else{
+        // check email ensure not email repeat use
+        $sqlCheckEmail="SELECT * FROM lecturer WHERE Email ='$email'";
+        $resultCheckEmail = mysqli_query($conn, $sqlCheckEmail);
+    
+    // Check if the query returned more than one row
+    if (mysqli_num_rows($resultCheckEmail) >= 1) {
+        echo "<script>alert('Register Fail due to email have been used for other lecturer');</script>";
+        }else{
+    
     // check the id ensure not repeat id can be use
     $sql2="SELECT * FROM lecturer WHERE Lecturer_Login_Id='$login_id'";
     $result2=mysqli_query($conn,$sql2);
@@ -50,7 +69,8 @@
     echo "<script>alert('success');</script>";
     header("location:admin_account.php");
   }
-  }
+        }
+}
   
  
 
