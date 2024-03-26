@@ -43,17 +43,29 @@ CREATE TABLE `comment` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `file`
+-- Table structure for table `file_management`
 --
 
-CREATE TABLE `file` (
+CREATE TABLE `file_management` (
   `File_Id` int(11) NOT NULL,
   `File_Link` varchar(255) NOT NULL,
-  `File_Type` varchar(255) NOT NULL,
-  `Lecturer_Id` int(11) NOT NULL,
-  `Student_Id` int(11) NOT NULL,
-  `Group_Id` int(11) NOT NULL
+  `File_Title` varchar(255) NOT NULL,
+  `Uploaded_Date` datetime NOT NULL,
+  `Upload_Id` int(11) NOT NULL,
+  `Received_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `file_management`
+--
+
+INSERT INTO `file_management` (`File_Id`, `File_Link`, `File_Title`, `Uploaded_Date`, `Upload_Id`, `Received_Id`) VALUES
+(1, 'tetsupload.txt', 'try1', '2024-03-26 14:51:33', 1, 1),
+(2, 'tetsupload.txt', 'try1', '2024-03-26 14:51:33', 1, 1),
+(3, 'tetsupload.txt', 'try1', '2024-03-26 14:54:28', 1, 1),
+(4, 'tetsupload.txt', 'try1', '2024-03-26 14:59:51', 1, 1),
+(7, 'build.txt', 'try1', '2024-03-26 15:27:15', 1, 2),
+(8, 'build.txt', 'try1', '2024-03-26 15:41:31', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -186,12 +198,12 @@ ALTER TABLE `comment`
   ADD KEY `FK_Comment_Blog_Id` (`Blog_Id`);
 
 --
--- Indexes for table `file`
+-- Indexes for table `file_management`
 --
-ALTER TABLE `file`
-  ADD KEY `File_Lecturer_Id` (`Lecturer_Id`),
-  ADD KEY `File_Student_Id` (`Student_Id`),
-  ADD KEY `File_Group_Id` (`Group_Id`);
+ALTER TABLE `file_management`
+  ADD PRIMARY KEY (`File_Id`),
+  ADD KEY `File_Lecturer_Id` (`Upload_Id`),
+  ADD KEY `File_Student_Id` (`Received_Id`);
 
 --
 -- Indexes for table `group_student_lecturer`
@@ -252,6 +264,12 @@ ALTER TABLE `comment`
   MODIFY `Comment_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `file_management`
+--
+ALTER TABLE `file_management`
+  MODIFY `File_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `group_student_lecturer`
 --
 ALTER TABLE `group_student_lecturer`
@@ -269,22 +287,4 @@ ALTER TABLE `lecturer`
 ALTER TABLE `meeting`
   MODIFY `Meeting_Id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `program`
---
-ALTER TABLE `program`
-  MODIFY `Program_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `student`
---
-ALTER TABLE `student`
-  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `blog`
 --
