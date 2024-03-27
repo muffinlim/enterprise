@@ -17,6 +17,8 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         // Use password_verify to compare the entered password with the hashed password
         if (password_verify($Student_Password, $hashedPasswordFromDatabase)) {
         $_SESSION['Student_Id'] = $row['Student_Id']; 
+        $_SESSION['Student_Login_Id']=$Student_Login_Id;
+        
         header("location:../enterprise/Content/student_profile.php");
         }else{
           echo "<script>alert('Wrong ID or Password');</script>";

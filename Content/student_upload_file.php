@@ -4,39 +4,54 @@
   $customCssFile = '../Styles/admin_register_user.css';
   session_start();
   $Student_Id=$_SESSION['Student_Id'];
+  $Student_Login_Id=$_SESSION['Student_Login_Id'];
   include('../Header/head.php');
-  include('../Header/admin_navibar.html');
+  include('../Header/student_navibar.html');
   include('../DatabaseConnection.php');
   date_default_timezone_set('Asia/Kuala_Lumpur');
   $currentDateTime = date("Y-m-d H:i:s");
-  $lecturer_received=$_POST['lecturer_received'];
+  
 
 
     //   add a check for ensure the student have been grouped if no grouped prompt message ask for admin group first.
     $sqlSelectStudentGroup="";
     
     if(isset($_POST['Upload'])){
+     
         $date_upload=$_POST['date_upload'];
         $file_title=$_POST['file_title'];
-
+        $Lecturer_Login_Id=$_POST['Lecturer_Login_Id'];
         // get file name uploaded
         $file_upload=$_FILES['file_upload']['name'];
         //tempe file
         $file_upload_tmp=$_FILES['file_upload']['tmp_name'];
         //the part you store the upload file must in your code file
         $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$file_upload;
-        $sqlInsertFile="INSERT INTO file_management(File_Link,File_Title,Uploaded_Date,Upload_Id ,Received_Id) VALUES ('$file_upload','$file_title','$date_upload','$Student_Id','$lecturer_received')";
+          // block if the file name have been use same name
+          $sqlSelectFileName="SELECT * FROM file_management WHERE File_Link='$file_upload'";
+          $resultSelectFileName = mysqli_query($conn, $sqlSelectFileName);
+          if ($resultSelectFileName->num_rows > 1) {
+            echo "<script>alert('Upload file fail please rename the file the file name have been used');</script>";
+          }else{        
+        
+        $sqlInsertFile="INSERT INTO file_management(File_Link,File_Title,Uploaded_Date,Upload_Id ,Received_Id) VALUES ('$file_upload','$file_title','$date_upload','$Student_Login_Id','$Lecturer_Login_Id')";
         $runsqlInsertFile=mysqli_query($conn,$sqlInsertFile);
-if($runsqlInsertFile){
-    // if can insert upload file into the part we store
-    move_uploaded_file($file_upload_tmp,$path_store);
-echo "upload successfull";
+        if($runsqlInsertFile){
+            // if can insert upload file into the part we store
+            move_uploaded_file($file_upload_tmp,$path_store);
+            echo "<script>alert('File upload successfull!');";
+            // Redirect to student_file.php using JavaScript
+            echo "window.location.href = 'student_file.php';";
+            echo "</script>";;
+        
 }else{
     echo "error".mysqli_error($conn);
 }
 
     }
- 
+}
+
+
 ?>
 
 <body>
@@ -59,34 +74,27 @@ echo "upload successfull";
     <!-- select the student belong to which lecturer using group table -->
     <?php 
     // SQL query to select data from group_student_lecturer based on Student_Id
-    $sqlSelectGroup = "SELECT * FROM group_student_lecturer WHERE Student_Id='$Student_Id'";
+    $sqlSelectGroup = "SELECT * 
+    FROM group_student_lecturer 
+    INNER JOIN lecturer ON group_student_lecturer.Lecturer_Id = lecturer.Lecturer_Id 
+    WHERE Student_Id='$Student_Id'";
     
+   
     // Execute the query
     $result = mysqli_query($conn, $sqlSelectGroup);
-
-    // Check if the query was successful
-    if ($result) {
-        // Fetch the row as an associative array
-        $row = mysqli_fetch_assoc($result);
-
-        // Check if a row was fetched
-        if ($row) {
-            // Output the value of Lecturer_Id
-            echo '<input type="hidden" name="lecturer_received" value="' . $row['Lecturer_Id'] . '">';
-        } else {
-            // the student not group yet
-            echo "<script>alert('Please ask admin to group you to lecturer');";
-            // Redirect to admin_group.php using JavaScript
-            echo "window.location.href = 'student_file.php';";
-            echo "</script>";
-            
-        }
-    } else {
-        echo "Error executing query: " . mysqli_error($conn);
-    }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        
+        $Lecturer_Login_Id=$row['Lecturer_Login_Id'];
+        
+    
 ?>
 
+    <input type="hidden" name="Lecturer_Login_Id" value="<?php echo $Lecturer_Login_Id;?>">
 
+<?php 
+    }    
+            ?>
       <button type="submit" name="Upload" id="submit">Upload</button>
     </form>
 
