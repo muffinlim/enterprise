@@ -26,8 +26,6 @@
 if (mysqli_num_rows($resultCheckEmail) >= 1) {
     echo "<script>alert('Register Fail due to email have been used for student');</script>";
     }else{
-
-    
     // check the id ensure not repeat id can be use
     $sql2="SELECT * FROM student WHERE Student_Login_Id='$login_id'";
     $result2=mysqli_query($conn,$sql2);
@@ -99,7 +97,7 @@ if (mysqli_num_rows($resultCheckEmail) >= 1) {
       </select>
 
       <label for="username">Login Id:</label>
-      <input type="text" id="login_id" name="login_id" required>
+      <input type="text" pattern="[A-Za-z]{4}-\d{7}" placeholder="example XXXX-1900584" id="login_id" name="login_id" required>
       
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>

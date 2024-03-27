@@ -51,8 +51,8 @@ CREATE TABLE `file_management` (
   `File_Link` varchar(255) NOT NULL,
   `File_Title` varchar(255) NOT NULL,
   `Uploaded_Date` datetime NOT NULL,
-  `Upload_Id` int(11) NOT NULL,
-  `Received_Id` int(11) NOT NULL
+  `Upload_Id` varchar(255) NOT NULL,
+  `Received_Id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -60,12 +60,7 @@ CREATE TABLE `file_management` (
 --
 
 INSERT INTO `file_management` (`File_Id`, `File_Link`, `File_Title`, `Uploaded_Date`, `Upload_Id`, `Received_Id`) VALUES
-(1, 'tetsupload.txt', 'try1', '2024-03-26 14:51:33', 1, 1),
-(2, 'tetsupload.txt', 'try1', '2024-03-26 14:51:33', 1, 1),
-(3, 'tetsupload.txt', 'try1', '2024-03-26 14:54:28', 1, 1),
-(4, 'tetsupload.txt', 'try1', '2024-03-26 14:59:51', 1, 1),
-(7, 'build.txt', 'try1', '2024-03-26 15:27:15', 1, 2),
-(8, 'build.txt', 'try1', '2024-03-26 15:41:31', 2, 0);
+(1, 'ProductBacklogNote.txt', 'This is the BackLog', '2024-03-27 12:12:10', 'XXXX 1900584', 'XXXX-1900584');
 
 -- --------------------------------------------------------
 
@@ -84,7 +79,7 @@ CREATE TABLE `group_student_lecturer` (
 --
 
 INSERT INTO `group_student_lecturer` (`Group_Id`, `Student_Id`, `Lecturer_Id`) VALUES
-(47, 1, 2);
+(3, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -106,11 +101,7 @@ CREATE TABLE `lecturer` (
 --
 
 INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lecturer_Password`, `Lecturer_Name`, `Email`) VALUES
-(1, 1, 'Lecturer', 'Lecturer', 'Lecturer 1', 'Lecturer@gmail.com'),
-(2, 1, 'Lecturer2', '$2y$10$BFTYhGbcBsygnQ8PJpJ3den.yCn/TvsmsBf7BhBBctAdCjUtghs7.', 'Lecturer2', 'Lecturer2@gmail.com'),
-(3, 2, 'Lecturer3', '$2y$10$4tcOJKJmrvj3jVHaVXoYb.rXb5pY7gOdAWAAV8BPGTYtJiPU22Kw2', 'Lecturer3', 'Lecturer3@gmail.com'),
-(4, 2, 'Lecturer5', '$2y$10$suzXufCM3/wwjXeBqCt2b.H5MZxbdrHhRC3.LcHc4CQdCq3qHTwBm', 'Lecturer5', 'Lecturer5@gmail.com'),
-(5, 1, 'Lecturer6', '$2y$10$/IrhBCw6ZaZSpFL/YWFw8uzQJLUMuKz9yC0fXvkLbqlgEFzCpZ7Ce', 'Lecturer6', 'Lecturer6@gmail.com');
+(1, 1, 'XXXX-1900584', '$2y$10$SonMoi9/aivUYj40aTRaQePyeglLvtsbEq0OFOmgMBHiYLwEbU3qS', 'MR Lim', 'MRLim@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -169,8 +160,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`Student_Id`, `Program_Id`, `Student_Login_Id`, `Student_Password`, `Student_Name`, `Email`) VALUES
-(1, 1, 'Student1', '$2y$10$.a9mc9Tp/ULMFGvGOJiJGORxL8JBagce59i.bAaYprEjTtpMQXNiG', 'Student1', 'Student1@gmail.com'),
-(2, 1, 'Student2', '$2y$10$pPNOueFRrMExzVvE.h9TneOFAbYhR6LICrhr3eQWRxDtVm1zE48kO', 'Student2', 'Student2@gmail.com');
+(2, 1, 'XXXX-1900584', '$2y$10$meAnr35Ba8X.xlpR1EiXkOsi0IolimoaBeXENGheeDlKAcRFVCf12', 'Muffim', 'Muffim2@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -267,19 +257,19 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `file_management`
 --
 ALTER TABLE `file_management`
-  MODIFY `File_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `File_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `group_student_lecturer`
 --
 ALTER TABLE `group_student_lecturer`
-  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `lecturer`
 --
 ALTER TABLE `lecturer`
-  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `meeting`
@@ -288,3 +278,58 @@ ALTER TABLE `meeting`
   MODIFY `Meeting_Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `program`
+--
+ALTER TABLE `program`
+  MODIFY `Program_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `student`
+--
+ALTER TABLE `student`
+  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `blog`
+--
+ALTER TABLE `blog`
+  ADD CONSTRAINT `FK_Blog_Lecturer_Id` FOREIGN KEY (`Lecturer_Id`) REFERENCES `lecturer` (`Lecturer_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_Blog_Student_Id` FOREIGN KEY (`Student_Id`) REFERENCES `student` (`Student_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `FK_Comment_Blog_Id` FOREIGN KEY (`Blog_Id`) REFERENCES `blog` (`Blog_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `group_student_lecturer`
+--
+ALTER TABLE `group_student_lecturer`
+  ADD CONSTRAINT `FK_Group_Lecturer_Id` FOREIGN KEY (`Lecturer_Id`) REFERENCES `lecturer` (`Lecturer_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_Group_Student_Id` FOREIGN KEY (`Student_Id`) REFERENCES `student` (`Student_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `lecturer`
+--
+ALTER TABLE `lecturer`
+  ADD CONSTRAINT `FK_Lecturer_Program_Id` FOREIGN KEY (`Program_Id`) REFERENCES `program` (`Program_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `meeting`
+--
+ALTER TABLE `meeting`
+  ADD CONSTRAINT `FK_Meeting_Lecturer_Id` FOREIGN KEY (`Lecturer_Id`) REFERENCES `lecturer` (`Lecturer_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_Meeting_Student_Id` FOREIGN KEY (`Student_Id`) REFERENCES `student` (`Student_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student`
+--
+ALTER TABLE `student`
+  ADD CONSTRAINT `FK_Student_Program_Id` FOREIGN KEY (`Program_Id`) REFERENCES `program` (`Program_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+

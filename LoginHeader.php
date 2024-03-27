@@ -39,7 +39,7 @@
             <a class="nav-link" href="student_login.php">Student</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="lecture_login.php">Lecture</a>
+            <a class="nav-link" href="lecturer_login.php">Lecturer</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="admin_login.php">Admin</a>

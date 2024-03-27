@@ -1,7 +1,6 @@
 <?php
  include('../DatabaseConnection.php');
 if(!empty($_GET['File_Link'])){
-    // get the file name
 $File_Link=basename($_GET['File_Link']);
 $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$File_Link;
 
@@ -20,7 +19,7 @@ if(!empty($File_Link)&&file_exists($path_store)){
     $sqlDeletFile="DELETE FROM file_management WHERE File_Link='$File_Link'";
     mysqli_query($conn,$sqlDeletFile);
              echo "<script>alert('The file have been removed from the part you store!');";
-            echo "window.location.href = 'student_file.php';";
+            echo "window.location.href = 'lecturer_file.php';";
             echo "</script>";
      
     }

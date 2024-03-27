@@ -20,7 +20,7 @@ $resultsqlSelectStudentInGroup = mysqli_query($conn, $sqlSelectStudentInGroup);
             echo "<script>alert('Updated student list to lecturer successfull!');";
             // Redirect to admin_group.php using JavaScript
             echo "window.location.href = 'admin_group.php';";
-            echo "</script>";;
+            echo "</script>";
     } 
 }else{
      // the student have been assign for other lecturer remove the record that have been assign to the lecturer 

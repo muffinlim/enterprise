@@ -21,11 +21,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         
         header("location:../enterprise/Content/student_profile.php");
         }else{
-          echo "<script>alert('Wrong ID or Password');</script>";
-          header("location:student_login.php");
+          echo "<script>alert('Wrong ID or Password!');";
+          echo "window.location.href = 'student_login.php';";
+          echo "</script>";
         }
         } else{
-          echo "Student not found in the system";
+          echo "<script>alert('Student not found in the system!');";
+          echo "window.location.href = 'student_login.php';";
+          echo "</script>";
+        
         }
 
     
