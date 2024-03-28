@@ -17,8 +17,9 @@
     
   <div class="d-flex justify-content-between">
   <div>
-    <select name="" id=""><i class="bi bi-filter"></i>
-      <option value="Student">Student</option>
+    <select name="filter" id="filter"><i class="bi bi-filter"></i>
+    <option value="All">All</option>
+    <option value="Student">Student</option>
       <option value="Lecturer">Lecturer</option>
     </select>
   </div>
@@ -75,7 +76,23 @@ if (mysqli_num_rows($result) > 0) {
 </table>
 
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#filter").on('change', function() {
+        // This means the value of the filter
+        var filter_value = $(this).val();
 
+        $.ajax({
+            url: "admin_account_ajax_request.php", // Make sure to include the file extension (.php)
+            type: "POST",
+            data: { request: filter_value }, // Corrected data format
+            success: function(data) {
+                $(".table tbody").html(data);
+            }
+        });
+    });
+});
+</script>
 
 </body>
 </html>
