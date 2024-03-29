@@ -1,6 +1,6 @@
   <?php 
     include('LoginHeader.php');
-include('DatabaseConnection.php');
+    include('DatabaseConnection.php');
   
   ?>
 
