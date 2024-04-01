@@ -45,10 +45,11 @@
 
 
   // Fetch meetings for the student from the database
-  $sql = "SELECT m.meeting_id, m.created_at, t.start_time, t.end_time
+  $sql = "SELECT m.meeting_id, m.meeting_link, m.recorded_meeting_link, t.start_time, t.end_time
           FROM meeting m
           INNER JOIN time_slot t ON m.time_slot_id = t.time_slot_id
-          WHERE m.student_id = ?";
+          WHERE m.student_id = ?
+          ORDER BY m.created_at DESC";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("i", $student_id);
   $stmt->execute();
@@ -89,6 +90,11 @@ if (!empty($errorMessage)) {
         ?>
       </select>
     </div>
+
+    <div class="form-group">
+      <label for="meetingLink">Provide Meeting Link:</label>
+      <input type="text" id="meetingLink" name="meetingLink" class="form-control" placeholder="Enter meeting link" required>
+    </div>
     
     <button type="submit" class="btn btn-primary">Schedule Meeting</button>
   </form>
@@ -103,7 +109,8 @@ if (!empty($errorMessage)) {
         while ($row = $result->fetch_assoc()) {
             echo '<li class="meeting-li">';
             echo 'Meeting ID: ' . $row['meeting_id'] . '<br>';
-            echo 'Created At: ' . $row['created_at'] . '<br>';
+            echo isset($row['meeting_link']) ? '<a href="' . $row['meeting_link'] . '">Join Meeting</a><br>' : '';
+            echo 'Recorded Meeting: ' . ($row['recorded_meeting_link'] ? '<a href="' . $row['recorded_meeting_link'] . '">Review Meeting</a><br>' : 'Not available <br>');
             echo 'Time Slot: ' . $row['start_time'] . ' - ' . $row['end_time'] . '<br>';
             echo '</li>';
         }

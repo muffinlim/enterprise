@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2024 at 02:19 PM
+-- Generation Time: Apr 01, 2024 at 09:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -142,18 +142,20 @@ INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lectu
 
 CREATE TABLE `meeting` (
   `meeting_id` int(11) NOT NULL,
-  `student_id` int(11) DEFAULT NULL,
-  `time_slot_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `student_id` int(11) NOT NULL,
+  `time_slot_id` int(11) NOT NULL,
+  `meeting_link` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `recorded_meeting_link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `meeting`
 --
 
-INSERT INTO `meeting` (`meeting_id`, `student_id`, `time_slot_id`, `created_at`) VALUES
-(6, 3, 5, '2024-03-31 11:25:42'),
-(7, 3, 4, '2024-03-31 11:25:44');
+INSERT INTO `meeting` (`meeting_id`, `student_id`, `time_slot_id`, `meeting_link`, `created_at`, `recorded_meeting_link`) VALUES
+(10, 3, 4, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:46', NULL),
+(11, 3, 5, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:50', 'https://www.youtube.com/watch?v=ImtZ5yENzgE');
 
 -- --------------------------------------------------------
 
@@ -340,7 +342,7 @@ ALTER TABLE `lecturer`
 -- AUTO_INCREMENT for table `meeting`
 --
 ALTER TABLE `meeting`
-  MODIFY `meeting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `meeting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `program`

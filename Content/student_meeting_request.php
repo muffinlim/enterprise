@@ -8,13 +8,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve student ID from session
     $student_id = $_SESSION['Student_Id'];
     
-    // Retrieve selected time slot ID from the form
     $time_slot_id = $_POST['timeSlot'];
+    $meeting_link = $_POST['meetingLink'];
 
     // Insert the meeting request into the database
-    $sql = "INSERT INTO meeting (student_id, time_slot_id) VALUES (?, ?)";
+    $sql = "INSERT INTO meeting (student_id, time_slot_id, meeting_link) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $student_id, $time_slot_id);
+    $stmt->bind_param("iis", $student_id, $time_slot_id, $meeting_link);
 
     if ($stmt->execute()) {
         // Meeting request successfully saved
