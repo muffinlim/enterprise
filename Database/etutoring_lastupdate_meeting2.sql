@@ -1,3 +1,31 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 01, 2024 at 09:40 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `etutoring`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_account`
+--
 
 CREATE TABLE `admin_account` (
   `Admin_Id` int(11) NOT NULL,
@@ -79,7 +107,9 @@ CREATE TABLE `group_student_lecturer` (
 --
 
 INSERT INTO `group_student_lecturer` (`Group_Id`, `Student_Id`, `Lecturer_Id`) VALUES
-(3, 2, 1);
+(3, 2, 1),
+(9, 4, 2),
+(10, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -101,7 +131,8 @@ CREATE TABLE `lecturer` (
 --
 
 INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lecturer_Password`, `Lecturer_Name`, `Email`) VALUES
-(1, 1, 'XXXX-1900584', '$2y$10$SonMoi9/aivUYj40aTRaQePyeglLvtsbEq0OFOmgMBHiYLwEbU3qS', 'MR Lim', 'MRLim@gmail.com');
+(1, 1, 'XXXX-1900584', '$2y$10$SonMoi9/aivUYj40aTRaQePyeglLvtsbEq0OFOmgMBHiYLwEbU3qS', 'MR Lim', 'MRLim@gmail.com'),
+(2, 2, 'SCPG-1800141', '$2y$10$nyxfQP3jYVevU2Ph048j5OZBAH5/rIQp5yXSA3vY5ZqrMn4I0mTJC', 'Muffin Lim', 'limyongkhang@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -110,15 +141,21 @@ INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lectu
 --
 
 CREATE TABLE `meeting` (
-  `Meeting_Id` int(11) NOT NULL,
-  `Student_Id` int(11) NOT NULL,
-  `Lecturer_Id` int(11) NOT NULL,
-  `Meeting_Start` time NOT NULL,
-  `Meeting_End` time NOT NULL,
-  `Date` datetime NOT NULL,
-  `Meetin_Link` varchar(255) NOT NULL,
-  `Meeting_status` int(11) NOT NULL DEFAULT 0
+  `meeting_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `time_slot_id` int(11) NOT NULL,
+  `meeting_link` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `recorded_meeting_link` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `meeting`
+--
+
+INSERT INTO `meeting` (`meeting_id`, `student_id`, `time_slot_id`, `meeting_link`, `created_at`, `recorded_meeting_link`) VALUES
+(10, 3, 4, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:46', NULL),
+(11, 3, 5, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:50', 'https://www.youtube.com/watch?v=ImtZ5yENzgE');
 
 -- --------------------------------------------------------
 
@@ -160,7 +197,30 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`Student_Id`, `Program_Id`, `Student_Login_Id`, `Student_Password`, `Student_Name`, `Email`) VALUES
-(2, 1, 'XXXX-1900584', '$2y$10$meAnr35Ba8X.xlpR1EiXkOsi0IolimoaBeXENGheeDlKAcRFVCf12', 'Muffim', 'Muffim2@gmail.com');
+(2, 1, 'XXXX-1900584', '$2y$10$meAnr35Ba8X.xlpR1EiXkOsi0IolimoaBeXENGheeDlKAcRFVCf12', 'Muffim', 'Muffim2@gmail.com'),
+(3, 2, 'SCPG-1314520', '$2y$10$1y9ZxFM04qc6goASLw/KpegBZwX/TbENTcLz/VE7zSYpKuTgJab.C', 'Clover0510', 'clover0510love@gmail.com'),
+(4, 2, 'SCPG-1900714', '$2y$10$PNmJJXK6y613eTv.E3ZseeQBPgSXeFaCTDtwZ.//IypuXd9ne8fdS', 'Hakimi', 'limmuffin0510@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `time_slot`
+--
+
+CREATE TABLE `time_slot` (
+  `time_slot_id` int(11) NOT NULL,
+  `lecture_id` int(11) DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `time_slot`
+--
+
+INSERT INTO `time_slot` (`time_slot_id`, `lecture_id`, `start_time`, `end_time`) VALUES
+(4, 2, '2024-04-01 17:00:00', '2024-04-01 17:30:00'),
+(5, 2, '2024-04-01 19:00:00', '2024-04-01 19:30:00');
 
 --
 -- Indexes for dumped tables
@@ -214,9 +274,9 @@ ALTER TABLE `lecturer`
 -- Indexes for table `meeting`
 --
 ALTER TABLE `meeting`
-  ADD PRIMARY KEY (`Meeting_Id`),
-  ADD KEY `FK_Meeting_Student_Id` (`Student_Id`),
-  ADD KEY `FK_Meeting_Lecturer_Id` (`Lecturer_Id`);
+  ADD PRIMARY KEY (`meeting_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `time_slot_id` (`time_slot_id`);
 
 --
 -- Indexes for table `program`
@@ -230,6 +290,13 @@ ALTER TABLE `program`
 ALTER TABLE `student`
   ADD PRIMARY KEY (`Student_Id`),
   ADD KEY `FK_Student_Program_Id` (`Program_Id`);
+
+--
+-- Indexes for table `time_slot`
+--
+ALTER TABLE `time_slot`
+  ADD PRIMARY KEY (`time_slot_id`),
+  ADD KEY `lecture_id` (`lecture_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -263,19 +330,19 @@ ALTER TABLE `file_management`
 -- AUTO_INCREMENT for table `group_student_lecturer`
 --
 ALTER TABLE `group_student_lecturer`
-  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `lecturer`
 --
 ALTER TABLE `lecturer`
-  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `meeting`
 --
 ALTER TABLE `meeting`
-  MODIFY `Meeting_Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `meeting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `program`
@@ -287,7 +354,13 @@ ALTER TABLE `program`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `time_slot`
+--
+ALTER TABLE `time_slot`
+  MODIFY `time_slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -323,13 +396,22 @@ ALTER TABLE `lecturer`
 -- Constraints for table `meeting`
 --
 ALTER TABLE `meeting`
-  ADD CONSTRAINT `FK_Meeting_Lecturer_Id` FOREIGN KEY (`Lecturer_Id`) REFERENCES `lecturer` (`Lecturer_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_Meeting_Student_Id` FOREIGN KEY (`Student_Id`) REFERENCES `student` (`Student_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `meeting_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`Student_Id`),
+  ADD CONSTRAINT `meeting_ibfk_2` FOREIGN KEY (`time_slot_id`) REFERENCES `time_slot` (`time_slot_id`);
 
 --
 -- Constraints for table `student`
 --
 ALTER TABLE `student`
   ADD CONSTRAINT `FK_Student_Program_Id` FOREIGN KEY (`Program_Id`) REFERENCES `program` (`Program_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `time_slot`
+--
+ALTER TABLE `time_slot`
+  ADD CONSTRAINT `time_slot_ibfk_1` FOREIGN KEY (`lecture_id`) REFERENCES `lecturer` (`Lecturer_Id`);
 COMMIT;
 
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -1,4 +1,12 @@
+<?php
 
+  $pageTitle = "Admin | Dashboard";
+  $customCssFile = '../Styles/student_dashboard.css';
+
+  include('../Header/head.php');
+  include('../Header/admin_navibar.html');
+  
+?>
 <h2>Admin Dashboard</h2>
 <div class="row">
     <div class="col-md-4">

@@ -1,0 +1,70 @@
+<!-- admin_register_user.php -->
+<?php
+  $pageTitle = "Student | File Management";
+  $customCssFile = '../Styles/Studentprofile.css';
+  session_start();
+  $Student_Id=$_SESSION['Student_Id'];
+  $Student_Login_Id=$_SESSION['Student_Login_Id'];
+  include('../Header/head.php');
+  include('../Header/Student_navibar.html');
+  include('../DatabaseConnection.php');
+?>
+<body>
+<div class="container-md">
+<h2>Student - File Management</h2>
+<div class="float-right">
+    <a href="student_upload_file.php" class="btn btn-primary" style="font-size:15px">Upload File <i class="fa fa-plus-circle"></i></a>
+</div>
+<br><br>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">File Title</th>
+      <th scope="col">File Name</th>
+      <th scope="col">Uploaded Date</th>
+      <th scope="col">Uploaded By</th>
+      <th scope="col">Received By</th>
+      <th scope="col">Operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php
+    $sqlSelectFileDetail = "SELECT * FROM file_management WHERE Upload_Id='$Student_Login_Id' OR Received_Id='$Student_Login_Id'";
+    $resultSelectFileDetail = mysqli_query($conn, $sqlSelectFileDetail);
+    $count = 0; // Counter variable for row numbering
+    while ($row = mysqli_fetch_assoc($resultSelectFileDetail)) {
+        $count++;
+    ?>
+        <tr>
+            <td><?php echo $count; ?></td>
+            <td><?php echo $row['File_Title']; ?></td>
+            <td><?php echo $row['File_Link']; ?></td>
+            <td><?php echo $row['Uploaded_Date']; ?></td>
+            <td><?php echo $row['Upload_Id']; ?></td>
+            <td><?php echo $row['Received_Id']; ?></td>
+            <td>
+                    <a href="student_dowload_file_request.php?File_Link=<?php echo $row['File_Link']; ?>" class="btn btn-primary">Download <i class="fa fa-download"></i></a>
+    
+    <?php
+        // Check if the file belongs to the current user before showing the delete button
+        if ($row['Upload_Id'] == $Student_Login_Id) {
+    ?>
+                    <a href="student_remove_file_request.php?File_Id=<?php echo $row['File_Id']; ?>" class="btn btn-danger">Remove <i class="fa fa-trash" aria-hidden="true"></i></a>
+    <?php } ?>
+               
+            </td>
+        </tr>
+    <?php
+    }
+    ?>
+    
+    
+  </tbody>
+</table>
+
+</div>
+
+
+</body>
+</html>

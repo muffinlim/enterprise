@@ -1,15 +1,15 @@
   <?php 
     include('LoginHeader.php');
-include('DatabaseConnection.php');
+    include('DatabaseConnection.php');
   
   ?>
 
   <div class="login-container">
     <h2 class="text-center">Login</h2>
-    <form id="loginForm" action="Login.php" method="POST">
+    <form id="loginForm" action="student_login_request.php" method="POST">
       <div class="form-group">
         <label for="username">Student Id:</label>
-        <input type="text" class="form-control" id="student_login_id" name="Student_Login_Id" placeholder="StudentCode">
+        <input type="text" class="form-control" id="student_login_id" name="Student_Login_Id" placeholder="StudentCode" required>
       </div>
       <div class="form-group">
         <label for="password">Password:</label>

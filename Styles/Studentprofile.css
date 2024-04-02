@@ -1,0 +1,16 @@
+
+.profile-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+.form_profile{
+  border: 1px solid #ced4da; /* Border color */
+  border-radius: 0.25rem; /* Border radius */
+  padding: 1rem; /* Padding */
+}
+  .container-md{
+    padding-top:5%;
+  }
+
+  

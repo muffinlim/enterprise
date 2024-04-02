@@ -1,0 +1,33 @@
+Product Backlog
+Student
+-	As a student I want to manage my account detail so that I can keep updating my personal information.
+
+-	As a student I want to get a notification by email so that I will not miss any important information
+
+-	As a student I want to allocate recording meetings so that I can review back the meeting.
+
+-	As a student uploading documents so that the lecturer can lecturer can keep track of the progress.
+
+
+-	As a student I want to download a file so that I can keep updating the lecturer's comments.
+
+-	As a student I want to create a blog so that I can trace opinions given by the lecturer. 
+
+
+-	As a student I want to have dashboard data so that I can keep track of the performance 
+
+-	As a student I want to make a meeting with the lecturer so that I get lecturer's feedback
+
+Lecturer
+-	As a lecturer I want to manage my account detail so that I can keep updating my personal information 
+-	As a lecturer I want to create a timeslot for a meeting so that I can manage the meeting with the student 
+-	As a lecturer I want to have a dashboard so that I can keep track of the performance
+-	As a lecturer I want to download the file upload by the student so that I can keep track the student progress.
+-	As a lecturer I want to upload a file to the system so that students can download the file I have made comments. 
+
+Authorized staff
+-	As an admin I want to have a dashboard that includes all the student and lecturer data so that I can keep track the student and lecturer performance.
+-	As an admin when I allocate a student and lecturer I want to have email notification to student and lecturer 
+-	As an admin I want to manage and reallocate personal tutors to students so that if the lecturer has too many students I can reallocate them. one lecturer just can have one group.
+
+-	As an admin I want to register an account for the lecturer and student so that they can login  and access to system feature make 
