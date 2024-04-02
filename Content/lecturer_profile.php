@@ -6,7 +6,18 @@
   include('../DatabaseConnection.php');
   include('../Header/head.php');
   include('../Header/lecturer_navibar.html');
-
+  $successMessage = isset($_GET['success']) ? $_GET['success'] : '';
+  $errorMessage = isset($_GET['error']) ? $_GET['error'] : '';
+  
+  // Display success message if it exists
+  if (!empty($successMessage)) {
+      echo '<div class="alert alert-success">' . htmlspecialchars($successMessage) . '</div>';
+  }
+  
+  // Display error message if it exists
+  if (!empty($errorMessage)) {
+      echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
+  }
   $Lecturer_Id=$_SESSION['Lecturer_Id'];
   $sqlLecturerInformation="SELECT * FROM lecturer WHERE Lecturer_Id='$Lecturer_Id'";
   $result = mysqli_query($conn, $sqlLecturerInformation);
@@ -35,17 +46,25 @@
     </div>
   </div>
   
+  <?php
+      }
+    }
+  
+  ?>
+  
   <div class="form-group row">
     <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
       <input type="password" class="form-control" name="Password" id="inputPassword3" placeholder="Password">
     </div>
   </div>
-  <?php
-      }
-    }
-  
-  ?>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">Reapeat Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" name="Repeat_Password" id="inputPassword3" placeholder="Password">
+    </div>
+  </div>
+
   <div class="form-group row">
     <div class="col-sm-10">
       <button type="submit" class="btn btn-primary">Update</button>
