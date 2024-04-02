@@ -19,9 +19,7 @@ if(!empty($File_Link)&&file_exists($path_store)){
 }else{
     $sqlDeletFile="DELETE FROM file_management WHERE File_Link='$File_Link'";
     mysqli_query($conn,$sqlDeletFile);
-             echo "<script>alert('The file have been removed from the part you store!');";
-            echo "window.location.href = 'student_file.php';";
-            echo "</script>";
+    header("location:student_file.php?success=The file have been removed from the part you store!");
      
     }
 }

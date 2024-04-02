@@ -6,6 +6,19 @@
   include('../Header/head.php');
   include('../Header/admin_navibar.html');
   include('../DatabaseConnection.php');
+  
+  $successMessage = isset($_GET['success']) ? $_GET['success'] : '';
+  $errorMessage = isset($_GET['error']) ? $_GET['error'] : '';
+  
+  // Display success message if it exists
+  if (!empty($successMessage)) {
+      echo '<div class="alert alert-success">' . htmlspecialchars($successMessage) . '</div>';
+  }
+  
+  // Display error message if it exists
+  if (!empty($errorMessage)) {
+      echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
+  }
 ?>
 
 <body>

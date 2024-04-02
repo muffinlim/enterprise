@@ -17,10 +17,7 @@ $resultsqlSelectStudentInGroup = mysqli_query($conn, $sqlSelectStudentInGroup);
     if (mysqli_num_rows($resultsqlSelectStudentInGroup) < 1) {
         $sql = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer_id')";
         if (mysqli_query($conn, $sql)) {
-            echo "<script>alert('Updated student list to lecturer successfull!');";
-            // Redirect to admin_group.php using JavaScript
-            echo "window.location.href = 'admin_group.php';";
-            echo "</script>";
+            header("location:admin_group.php?success=Updated student list to lecturer successfull!");
     } 
 }else{
      // the student have been assign for other lecturer remove the record that have been assign to the lecturer 
@@ -38,10 +35,7 @@ $resultsqlSelectStudentInGroup = mysqli_query($conn, $sqlSelectStudentInGroup);
     // insert the new group
     $sqlInsertNewGroup = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer_id')";
     if (mysqli_query($conn, $sqlInsertNewGroup)) {
-        echo "<script>alert('Updated student list to lecturer successfull!');";
-        // Redirect to admin_group.php using JavaScript
-        echo "window.location.href = 'admin_group.php';";
-        echo "</script>";
+        header("location:admin_group.php?success=Updated student list to lecturer successfull!");
     }
 }
 }
