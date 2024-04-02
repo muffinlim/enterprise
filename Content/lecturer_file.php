@@ -44,7 +44,18 @@
         <td><?php echo $row['Uploaded_Date']; ?></td>
         <td><?php echo $row['Upload_Id']; ?></td>
         <td><?php echo $row['Received_Id']; ?></td>
-        <td><a href="lecturer_dowload_file_request.php?File_Link=<?php echo $row['File_Link']; ?>" class="btn btn-primary" style="width:100%">Download <i class="fa fa-download"></i></a></td>
+        <td>
+     
+        <a href="lecturer_dowload_file_request.php?File_Link=<?php echo $row['File_Link']; ?>" class="btn btn-primary">Download <i class="fa fa-download"></i></a>
+       
+        <?php
+        // Check if the file belongs to the current user before showing the delete button
+        if ($row['Upload_Id'] == $Lecturer_Login_Id) {
+    ?>
+                    <a href="lecturer_remove_file_request.php?File_Id=<?php echo $row['File_Id']; ?>" class="btn btn-danger">Remove <i class="fa fa-trash" aria-hidden="true"></i></a>
+    <?php } ?>
+      </td>
+        
       </tr>
     <?php
     }

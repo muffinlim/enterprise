@@ -37,6 +37,7 @@
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">ID</th>
+      <th scope="col">Operation</th>
     </tr>
   </thead>
   <tbody>
@@ -66,6 +67,8 @@ if (mysqli_num_rows($result) > 0) {
         <td><?php echo $row['Name']; ?></td>
         <td><?php echo $row['Email']; ?></td>
         <td><?php echo $row['LoginId']; ?></td>
+        <td><a href="admin_remove_account.php?LoginId=<?php echo $row['LoginId']; ?>" class="btn btn-danger">Remove <i class="fa fa-trash" aria-hidden="true"></i></a></td>
+        
     </tr>
 <?php
     }
@@ -83,9 +86,9 @@ $(document).ready(function() {
         var filter_value = $(this).val();
 
         $.ajax({
-            url: "admin_account_ajax_request.php", // Make sure to include the file extension (.php)
+            url: "admin_account_ajax_request.php", 
             type: "POST",
-            data: { request: filter_value }, // Corrected data format
+            data: { request: filter_value }, 
             success: function(data) {
                 $(".table tbody").html(data);
             }
