@@ -34,6 +34,7 @@ if(isset($_POST['request'])){
             $output .= "<td>{$row['Name']}</td>";
             $output .= "<td>{$row['Email']}</td>";
             $output .= "<td>{$row['LoginId']}</td>";
+            $output .= "<td> <a href=admin_remove_account.php?LoginId={$row['LoginId']} class='btn btn-danger'>Remove <i class='fa fa-trash' aria-hidden='true'></i></a></td>";
             $output .= "</tr>";
         }
     }
