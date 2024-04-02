@@ -33,7 +33,7 @@ if ($result) {
     
     $conn->query($sqlUpdatelecturerInformation);
     
-    header("location:student_profile.php?success=Updated lecturer profile successfull!");
+    header("location:lecturer_profile.php?success=Updated lecturer profile successfull!");
 
    }else{
             if($Password==$Repeat_Password) {
