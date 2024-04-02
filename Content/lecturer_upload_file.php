@@ -39,10 +39,8 @@
         if($runsqlInsertFile){
             // if can insert upload file into the part we store
             move_uploaded_file($file_upload_tmp,$path_store);
-            echo "<script>alert('File upload successfull!');";
-            // Redirect to lecturer_file.php using JavaScript
-            echo "window.location.href = 'lecturer_file.php';";
-            echo "</script>";;
+           
+    header("location:lecturer_file.php?success=File upload successfull!");
         
 }else{
     echo "error".mysqli_error($conn);
