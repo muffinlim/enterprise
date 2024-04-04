@@ -23,10 +23,9 @@ if(isset($_GET['File_Id'])) {
 
             // Execute the SQL query
             if(mysqli_query($conn, $sql_delete)) {
-                echo "<script>alert('File remove successfull!');";
-                // Redirect to student_file.php using JavaScript
-                echo "window.location.href = 'student_file.php';";
-                echo "</script>";;
+                
+            header("location:student_file.php?success=File remove successfull!");
+
             } else {
                 echo "Error deleting record: " . mysqli_error($conn);
             }

@@ -6,7 +6,18 @@
   include('../DatabaseConnection.php');
   include('../Header/head.php');
   include('../Header/student_navibar.html');
-
+  $successMessage = isset($_GET['success']) ? $_GET['success'] : '';
+  $errorMessage = isset($_GET['error']) ? $_GET['error'] : '';
+  
+  // Display success message if it exists
+  if (!empty($successMessage)) {
+      echo '<div class="alert alert-success">' . htmlspecialchars($successMessage) . '</div>';
+  }
+  
+  // Display error message if it exists
+  if (!empty($errorMessage)) {
+      echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
+  }
   $Student_Id=$_SESSION['Student_Id'];
   $sqlStudentInformation="SELECT * FROM student WHERE Student_Id='$Student_Id'";
   $result = mysqli_query($conn, $sqlStudentInformation);
@@ -47,12 +58,12 @@
       <input type="password" class="form-control" name="Password" id="inputPassword3" placeholder="Password">
     </div>
   </div>
-  <!-- <div class="form-group row">
+  <div class="form-group row">
     <label class="col-sm-2 col-form-label">Reapeat Password</label>
     <div class="col-sm-10">
-      <input type="password" class="form-control" name="Password" id="inputPassword3" placeholder="Password">
+      <input type="password" class="form-control" name="Repeat_Password" id="inputPassword3" placeholder="Password">
     </div>
-  </div> -->
+  </div>
   
   <div class="form-group row">
     <div class="col-sm-10">

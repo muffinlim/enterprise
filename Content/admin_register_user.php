@@ -9,70 +9,61 @@
 
   if(isset($_POST['submit']))
 {
-  
+
   $login_id=$_POST['login_id'];
   $name=$_POST['username'];
   $email=$_POST['email'];
   $password=$_POST['password'];
   $usertype=$_POST['usertype'];
   $program=$_POST['program'];
+
+  //sql select union both table and check weather the Login_id and email have been  or not
+$sqlCheckEmailLoginId= "SELECT Id, Email, LoginId
+FROM (
+    (SELECT student.Student_Id AS Id, student.Email, student.Student_Login_Id AS LoginId
+    FROM student 
+    JOIN program ON program.Program_Id = student.Program_Id)
+    UNION ALL
+    (SELECT lecturer.Lecturer_Id AS Id, lecturer.Email, lecturer.Lecturer_Login_Id AS LoginId
+    FROM lecturer)
+) AS combined_data
+WHERE LoginId='$login_id' OR Email='$email'";
+
+if(mysqli_num_rows(mysqli_query($conn,$sqlCheckEmailLoginId))>=1){
+// the id or the email have been used
+header("location:admin_register_user.php?error=Register fail due to the id or the email have been used.");
+
+}else{
+  //  check the user type
   if($usertype=="student"){
-    
-    // check email ensure not email repeat use
-    $sqlCheckEmail="SELECT * FROM student WHERE Email ='$email'";
-    $resultCheckEmail = mysqli_query($conn, $sqlCheckEmail);
 
-// Check if the query returned more than one row
-if (mysqli_num_rows($resultCheckEmail) >= 1) {
-    echo "<script>alert('Register Fail due to email have been used for student');</script>";
-    }else{
-    // check the id ensure not repeat id can be use
-    $sql2="SELECT * FROM student WHERE Student_Login_Id='$login_id'";
-    $result2=mysqli_query($conn,$sql2);
-    if($result2->num_rows>0){
-      echo "<script>alert('Register Fail due to the login id have been used in other student account ');</script>";
-    }else{
-
-    
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-     
-  $sql = "INSERT INTO student (Program_Id,Student_Login_Id,Student_Password,Student_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+      $sql = "INSERT INTO student (Program_Id,Student_Login_Id,Student_Password,Student_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
       mysqli_query($conn, $sql);
-      echo "<script>alert('success');</script>";
-      header("location:admin_account.php");
-    }}
-
-  }else{
-        // check email ensure not email repeat use
-        $sqlCheckEmail="SELECT * FROM lecturer WHERE Email ='$email'";
-        $resultCheckEmail = mysqli_query($conn, $sqlCheckEmail);
-    
-    // Check if the query returned more than one row
-    if (mysqli_num_rows($resultCheckEmail) >= 1) {
-        echo "<script>alert('Register Fail due to email have been used for other lecturer');</script>";
-        }else{
-    
-    // check the id ensure not repeat id can be use
-    $sql2="SELECT * FROM lecturer WHERE Lecturer_Login_Id='$login_id'";
-    $result2=mysqli_query($conn,$sql2);
-    if($result2->num_rows>0){
-      echo "<script>alert('Register Fail due to the login id have been used in student account ');</script>";
+      header("location:admin_account.php?success=account student added successfully.");
     }else{
+      $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+      $sql = "INSERT INTO lecturer (Program_Id,Lecturer_Login_Id,Lecturer_Password,Lecturer_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
+      mysqli_query($conn, $sql);
+      header("location:admin_account.php?success=account lecturer added successfully.");
+  
+      
+    }
 
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $sql = "INSERT INTO lecturer (Program_Id,Lecturer_Login_Id,Lecturer_Password,Lecturer_Name,Email) VALUES ('$program','$login_id','$hashed_password','$name','$email')";
-    mysqli_query($conn, $sql);
-   
-    echo "<script>alert('success');</script>";
-    header("location:admin_account.php");
-  }
-        }
+}  
 }
-  
  
+$successMessage = isset($_GET['success']) ? $_GET['success'] : '';
+$errorMessage = isset($_GET['error']) ? $_GET['error'] : '';
 
-  
+// Display success message if it exists
+if (!empty($successMessage)) {
+    echo '<div class="alert alert-success">' . htmlspecialchars($successMessage) . '</div>';
+}
+
+// Display error message if it exists
+if (!empty($errorMessage)) {
+    echo '<div class="alert alert-danger">' . htmlspecialchars($errorMessage) . '</div>';
 }
 ?>
 
