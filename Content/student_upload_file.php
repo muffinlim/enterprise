@@ -26,7 +26,9 @@
         //tempe file
         $file_upload_tmp=$_FILES['file_upload']['tmp_name'];
         //the part you store the upload file must in your code file
-        $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$file_upload;
+        // $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$file_upload;
+        $path_store="C:/xampp/htdocs/enterprise/download_upload_file/".$row['File_Link'];
+
           // block if the file name have been use same name
           $sqlSelectFileName="SELECT * FROM file_management WHERE File_Link='$file_upload'";
           $resultSelectFileName = mysqli_query($conn, $sqlSelectFileName);
