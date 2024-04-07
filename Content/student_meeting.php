@@ -30,18 +30,23 @@
   }
 
 
-  // Fetch time slots for the student's lecture from the database
-  $sql = "SELECT * FROM time_slot WHERE lecture_id IN (SELECT gsl.Lecturer_Id FROM group_student_lecturer gsl WHERE gsl.student_id = ?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param("i", $student_id);
-  $stmt->execute();
-  $result = $stmt->get_result();
+  // Fetch time slots for the student's lecture that are not already booked for meetings
+$sql = "SELECT ts.time_slot_id, ts.start_time, ts.end_time
+FROM time_slot ts
+LEFT JOIN meeting m ON ts.time_slot_id = m.time_slot_id
+WHERE ts.lecture_id IN (SELECT gsl.Lecturer_Id FROM group_student_lecturer gsl WHERE gsl.student_id = ?)
+    AND m.meeting_id IS NULL";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $student_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-  // Store fetched time slots in an array
-  $timeSlots = [];
-  while ($row = $result->fetch_assoc()) {
-      $timeSlots[$row['time_slot_id']] = $row['start_time'] . ' - ' . $row['end_time'];
-  }
+// Store fetched time slots in an array
+$timeSlots = [];
+while ($row = $result->fetch_assoc()) {
+$timeSlots[$row['time_slot_id']] = $row['start_time'] . ' - ' . $row['end_time'];
+}
+
 
 
   // Fetch meetings for the student from the database
@@ -81,12 +86,17 @@ if (!empty($errorMessage)) {
   <form action="student_meeting_request.php" method="post" class="mt-4">
     <div class="form-group">
       <label for="timeSlot">Select Time Slot:</label>
-      <select id="timeSlot" name="timeSlot" class="form-control">
+      <select required id="timeSlot" name="timeSlot" class="form-control">
         <?php
-        // Display fetched time slots in the dropdown list
-        foreach ($timeSlots as $timeSlotId => $timeSlot) {
-            echo '<option value="' . $timeSlotId . '">' . htmlspecialchars($timeSlot) . '</option>';
-        }
+        // Check if there are any available time slots
+    if (empty($timeSlots)) {
+      echo '<option value="" disabled>No available time slots</option>';
+  } else {
+      // Display fetched time slots in the dropdown list
+      foreach ($timeSlots as $timeSlotId => $timeSlot) {
+          echo '<option value="' . $timeSlotId . '">' . htmlspecialchars($timeSlot) . '</option>';
+      }
+  }
         ?>
       </select>
     </div>
@@ -125,5 +135,7 @@ if (!empty($errorMessage)) {
 </div>
 </div>
 </div>
+
+
 </body>
 </html>

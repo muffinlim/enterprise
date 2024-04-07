@@ -55,7 +55,6 @@ if (!empty($errorMessage)) {
               while ($row = $result->fetch_assoc()) {
                   echo '<li class="meeting-li">';
                   echo 'Student Name: ' . $row['Student_Name'] . '<br>';
-                  echo 'Meeting ID: ' . $row['meeting_id'] . '<br>';
                   echo isset($row['meeting_link']) ? '<a href="' . $row['meeting_link'] . '">Join Meeting</a><br>' : '';
                 ?>
                 <?php
