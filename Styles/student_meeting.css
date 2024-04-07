@@ -4,11 +4,6 @@
     margin: auto;
   }
 
-  .disabled-option {
-      background-color: #ccc;
-      color: #777;
-  }
-
 .meeting-ul{
   list-style-type: none;
   padding: 10px;
