@@ -7,23 +7,26 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
    $Email=$_POST['Email'];
    $Password=$_POST['Password'];
    $Repeat_Password=$_POST['Repeat_Password'];
-// SQL query to check if the email exists for other students
-$sqlSelectEmail = "SELECT COUNT(*) AS emailCount FROM student WHERE Email = '$Email' AND Student_Id != '$Student_Id'";
 
-// Execute the query
-$result = mysqli_query($conn, $sqlSelectEmail);
 
-// Check if the query was successful
-if ($result) {
-    // Fetch the result
-    $row = mysqli_fetch_assoc($result);
-    
-    // Check if the email count is greater than or equal to 1
-    if ($row['emailCount'] >= 1) {
-        header("location:student_profile.php?error=Update Fail due to email have been used by other student!");
-    exit;
-    }
-} 
+   $sqlCheckEmail = "SELECT Id, Email, LoginId
+   FROM (
+       (SELECT student.Student_Id AS Id, student.Email, student.Student_Login_Id AS LoginId
+       FROM student 
+       JOIN program ON program.Program_Id = student.Program_Id)
+       UNION ALL
+       (SELECT lecturer.Lecturer_Id AS Id, lecturer.Email, lecturer.Lecturer_Login_Id AS LoginId
+       FROM lecturer)
+   ) AS combined_data
+   WHERE Email='$Email' AND Id!='$Student_Id'";
+   
+
+if(mysqli_num_rows(mysqli_query($conn,$sqlCheckEmail))>=1){
+// the id or the email have been used
+header("location:student_profile.php?error=Register fail due to the the email have been used.");
+
+}else{
+
    if(empty($Password)&&empty($Repeat_Password)){
     
     $sqlUpdateStudentInformation="UPDATE student
@@ -55,7 +58,7 @@ if ($result) {
     }
 }
 
-
+}
 }
 
 ?>

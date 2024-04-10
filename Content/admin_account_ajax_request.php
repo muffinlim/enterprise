@@ -35,6 +35,7 @@ if(isset($_POST['request'])){
             $output .= "<td>{$row['Email']}</td>";
             $output .= "<td>{$row['LoginId']}</td>";
             $output .= "<td> <a href=admin_remove_account.php?LoginId={$row['LoginId']} class='btn btn-danger'>Remove <i class='fa fa-trash' aria-hidden='true'></i></a></td>";
+            $output .= "<td> <a href=admin_reset_password.php?LoginId={$row['LoginId']} class='btn btn-primary'>Reset <i class='fa fa-pencil' aria-hidden='true'></i></a></td>";
             $output .= "</tr>";
         }
     }

@@ -82,7 +82,7 @@ if (mysqli_num_rows($result) > 0) {
         <td><?php echo $row['Email']; ?></td>
         <td><?php echo $row['LoginId']; ?></td>
         <td><a href="admin_remove_account.php?LoginId=<?php echo $row['LoginId']; ?>" class="btn btn-danger">Remove <i class="fa fa-trash" aria-hidden="true"></i></a></td>
-        <td><a href="admin_reset_account.php?LoginId=<?php echo $row['LoginId']; ?>" class="btn btn-primary">Reset <i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+        <td><a href="admin_reset_password.php?LoginId=<?php echo $row['LoginId']; ?>" class="btn btn-primary">Reset <i class="fa fa-pencil" aria-hidden="true"></i></a></td>
         
     </tr>
 <?php
