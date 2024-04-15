@@ -22,10 +22,10 @@
 ?>
 
 <body>
-<div class="admin-container mt-4">
+<div class="container-md">
 <h2>Admin - Account Student / Lecturer</h2>
 <br>
-<table class="table table-striped">
+<table class="table table-striped table-responsive-xl">
   <thead>
     
   <div class="d-flex justify-content-between">

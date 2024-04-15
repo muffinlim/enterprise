@@ -28,7 +28,7 @@
     <a href="student_upload_file.php" class="btn btn-primary" style="font-size:15px">Upload File <i class="fa fa-plus-circle"></i></a>
 </div>
 <br><br>
-<table class="table table-striped">
+<table class="table table-striped table-responsive-md">
   <thead>
     <tr>
       <th scope="col">#</th>
