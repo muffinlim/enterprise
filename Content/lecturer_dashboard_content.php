@@ -1,8 +1,8 @@
 <?php
-$pageTitle = "Student | Dashboard";
+$pageTitle = "Lectrurer | Dashboard";
 $customCssFile = '../Styles/Studentprofile.css';
 session_start();
-$Student_Id=$_SESSION['Student_Id'];
+$Lecturer_Id=$_SESSION['Lecturer_Id'];
 
 include('../Header/head.php');
 include('../Header/Student_navibar.html');
@@ -14,9 +14,9 @@ $errorMessage = isset($_GET['error']) ? $_GET['error'] : '';
 
 
 
-$sql = "SELECT program.Program_Id, program.Program_name FROM program INNER JOIN student ON program.Program_Id = student.Program_Id WHERE student.Student_Id = ?";
+$sql = "SELECT program.Program_Id, program.Program_name FROM program INNER JOIN lecturer ON program.Program_Id = lecturer.Program_Id WHERE lecturer.Lecturer_Id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $Student_Id);
+$stmt->bind_param("i", $Lecturer_Id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -27,22 +27,22 @@ if ($result->num_rows > 0) {
     echo "<h5 class='card-title'>Program ID: " . $row["Program_Id"] . "</h5>";
     echo "<h5 class='card-text'>Program Name: " . $row["Program_name"] . "</h5>";
 
-    // Fetch the grouped lecturer name for the logged-in student
-    $sql = "SELECT lecturer.Lecturer_Name
+    // Fetch the grouped student name
+    $sql = "SELECT student.Student_Name
             FROM group_student_lecturer
-            INNER JOIN lecturer ON group_student_lecturer.Lecturer_Id = lecturer.Lecturer_Id
-            WHERE group_student_lecturer.Student_Id = ?";
+            INNER JOIN student ON group_student_lecturer.Student_Id = student.Student_Id
+            WHERE group_student_lecturer.Lecturer_Id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $Student_Id);
+    $stmt->bind_param("i", $Lecturer_Id);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         // Output the grouped lecturer name
         $row = $result->fetch_assoc();
-        echo "<h5 class='card-title'>Grouped Lecturer Name: " . $row["Lecturer_Name"] . "</h5>";
+        echo "<h5 class='card-title'>Grouped Student Name: " . $row["Student_Name"] . "</h5>";
     } else {
-        echo "<p class='card-text'>You are not assigned to any group with a lecturer.</p>";
+        echo "<p class='card-text'>You are not assigned to any student.</p>";
     }
 
     echo "</div>"; // Close card-body
