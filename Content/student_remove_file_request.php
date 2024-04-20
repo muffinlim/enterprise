@@ -12,7 +12,9 @@ if(isset($_GET['File_Id'])) {
     $result = mysqli_query($conn, $sql_select_file);
     if($row = mysqli_fetch_assoc($result)) {
 
-        $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$row['File_Link'];
+        
+        // $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$row['File_Link'];
+        $path_store="C:/xampp/htdocs/enterprise/download_upload_file/".$row['File_Link'];
 
         // Delete the file from the storage location
         if(unlink($path_store)) {
