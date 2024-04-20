@@ -14,7 +14,7 @@ if(isset($_GET['File_Id'])) {
 
         
         // $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$row['File_Link'];
-        $path_store="C:/xampp/htdocs/enterprise/download_upload_file/".$row['File_Link'];
+        $path_store="C:/xampp/htdocs/GitHub/enterprise/Content/download_upload_file/".$row['File_Link'];
 
         // Delete the file from the storage location
         if(unlink($path_store)) {
