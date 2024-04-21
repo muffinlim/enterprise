@@ -1,6 +1,5 @@
 <?php
 $pageTitle = "Student | Dashboard";
-$customCssFile = '../Styles/Studentprofile.css';
 session_start();
 $Student_Id=$_SESSION['Student_Id'];
 

@@ -21,10 +21,9 @@ if (!isset($_SESSION['Lecturer_Id'])) {
 
 ?>
 
-
-  
-
-    
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">View Blog Post</h1>
 
     <?php
     // Display published blogs
@@ -46,13 +45,16 @@ if (!isset($_SESSION['Lecturer_Id'])) {
     if ($result->num_rows > 0) {
         // Output each published blog post
         while ($row = $result->fetch_assoc()) {
-            echo "<div>";
-            echo "<p><strong>Date:</strong> " . $row["Date"] . "</p>";
+            echo "<div class='border border-secondary p-3 mb-3'>";
             echo "<p><strong>Blog Post:</strong> " . $row["Blog_Post"] . "</p>";
-            echo '<img src="uploads/' . htmlentities($row['Blog_Id']) . '/' . htmlentities($row['Post_Image']) . '" 
-     width="180" height="300" alt=""><br/>';
+            echo "<div class='d-flex justify-content-center'>";
+            echo '<img src="uploads/' . htmlentities($row['Blog_Id']) . '/' . htmlentities($row['Post_Image']) . '" class="img-fluid mb-3" style="max-width: 500px; height: 300px;" ><br/>';
+            echo "</div>";
+            echo "<p><strong>Date:</strong> " . $row["Date"] . "</p>";
+
 
              // Display comments for the blog post
+             echo '<div class="border border-dark p-3 mb-3">';
         echo "<h3>Comments:</h3>";
         $blog_id = $row["Blog_Id"];
         $comment_sql = "SELECT lecturer.Lecturer_Name, comment.Comment_Detail FROM comment JOIN lecturer ON comment.Lecturer_Id = lecturer.Lecturer_Id WHERE comment.Blog_Id = $blog_id";
@@ -64,19 +66,19 @@ if (!isset($_SESSION['Lecturer_Id'])) {
         } else {
             echo "<p>No comments yet.</p>";
         }
+        echo '</div>';
             
 
         echo "<form method='POST' action='submit_comment.php'>";
         echo "<input type='hidden' name='blog_id' value='" . $row["Blog_Id"] . "'>";
         echo "<textarea name='comment' placeholder='Enter your comment'></textarea><br>";
-        echo "<button type='submit' name='submit_comment'>Submit Comment</button>";
+        echo "<button type='submit' class='btn btn-primary' name='submit_comment'>Submit Comment</button>";
         echo "</form>";
 
         
     
           
 
-            echo "<hr>";
             echo "</div>";
         }
     } else {
@@ -85,5 +87,7 @@ if (!isset($_SESSION['Lecturer_Id'])) {
 
     $conn->close();
     ?>
+
+</div>
 </body>
 </html>

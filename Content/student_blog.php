@@ -124,22 +124,22 @@ function deleteBlogFolder($blogid) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Page</title>
-</head>
+
 <body>
-    <h1>Create Blog Post</h1>
+<div class="container mt-5">
+    <h1 class="mb-4">Create Blog Post</h1>
     <form method="POST" action="<?php echo $_SERVER["PHP_SELF"]; ?>" enctype="multipart/form-data">
-        <textarea name="blog_post" rows="5" cols="50" required></textarea><br>
-        <input type="file" name="post_image" id="post_image" required><br>
-        <button type="submit" name="submit">Publish</button>
+    <div class="form-group">
+                <textarea class="form-control" name="blog_post" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="post_image">Select Image (PNG, JPG, JPEG) only:</label>
+                <input type="file" class="form-control-file" name="post_image" id="post_image" required>
+            </div>
+            <button type="submit" class="btn btn-primary" name="submit">Publish</button>
     </form>
 
-    <hr>
+    <hr class="border">
 
     <?php
     // Display published blogs
@@ -161,13 +161,16 @@ function deleteBlogFolder($blogid) {
     if ($result->num_rows > 0) {
         // Output each published blog post
         while ($row = $result->fetch_assoc()) {
-            echo "<div>";
-            echo "<p><strong>Date:</strong> " . $row["Date"] . "</p>";
+            echo "<div class='border border-secondary p-3 mb-3'>";
             echo "<p><strong>Blog Post:</strong> " . $row["Blog_Post"] . "</p>";
-            echo '<img src="uploads/' . htmlentities($row['Blog_Id']) . '/' . htmlentities($row['Post_Image']) . '" 
-     width="180" height="300" alt=""><br/>';
+            echo "<div class='d-flex justify-content-center'>";
+            echo '<img src="uploads/' . htmlentities($row['Blog_Id']) . '/' . htmlentities($row['Post_Image']) . '" class="img-fluid mb-3" style="max-width: 500px; height: 300px;" ><br/>';
+            echo "</div>";
+            echo "<p><strong>Date:</strong> " . $row["Date"] . "</p>";
+
 
              // Display comments for the blog post
+        echo '<div class="border border-dark p-3 mb-3">';
         echo "<h3>Comments:</h3>";
         $blog_id = $row["Blog_Id"];
         $comment_sql = "SELECT lecturer.Lecturer_Name, comment.Comment_Detail FROM comment JOIN lecturer ON comment.Lecturer_Id = lecturer.Lecturer_Id WHERE comment.Blog_Id = $blog_id";
@@ -179,18 +182,18 @@ function deleteBlogFolder($blogid) {
         } else {
             echo "<p>No comments yet.</p>";
         }
-            
+        echo '</div>';
+
 
         
             // Display delete button for the student's own blogs
             if ($row["Student_Id"] == $_SESSION['Student_Id']) {
                 echo "<form method='POST' action='" . $_SERVER["PHP_SELF"] . "'>";
                 echo "<input type='hidden' name='blog_id' value='" . $row["Blog_Id"] . "'>";
-                echo "<button type='submit' name='delete'>Delete</button>";
+                echo "<button type='submit' class='btn btn-primary' name='delete'>Delete</button>";
                 echo "</form>";
             }
 
-            echo "<hr>";
             echo "</div>";
         }
     } else {
@@ -199,5 +202,7 @@ function deleteBlogFolder($blogid) {
 
     $conn->close();
     ?>
+
+</div>
 </body>
 </html>

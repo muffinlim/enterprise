@@ -23,7 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
     $sql = "INSERT INTO comment (Blog_Id, Lecturer_Id, Comment_Detail) VALUES ('$blog_id', '$Lecturer_Id', '$comment_detail')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Comment submitted successfully!";
+        echo "<script>window.location.href='lecturer_blog.php';</script>"; // Redirect back to the upload page
+
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
