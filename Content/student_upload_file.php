@@ -29,7 +29,6 @@
         // $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$file_upload;
         $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$file_upload;
 
-
           // block if the file name have been use same name
           $sqlSelectFileName="SELECT * FROM file_management WHERE File_Link='$file_upload'";
           $resultSelectFileName = mysqli_query($conn, $sqlSelectFileName);
