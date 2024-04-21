@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
         $_SESSION['Lecturer_Id'] = $row['Lecturer_Id']; 
         $_SESSION['Lecturer_Login_Id']=$Lecturer_Login_Id;
         
-        header("location:../enterprise/Content/lecturer_profile.php");
+        header("location:../enterprise/Content/lecturer_dashboard_content.php");
         }else{
             echo "<script>alert('Wrong ID or Password');";
             echo "window.location.href = 'lecturer_login.php';";

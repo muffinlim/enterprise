@@ -5,7 +5,7 @@
   ?>
 
   <div class="login-container">
-    <h2 class="text-center">Login</h2>
+    <h2 class="text-center">Student Login</h2>
     <form id="loginForm" action="student_login_request.php" method="POST">
       <div class="form-group">
         <label for="username">Student Id:</label>
