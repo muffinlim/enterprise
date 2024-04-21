@@ -4,7 +4,6 @@
 
   <div class="login-container">
     <h2 class="text-center">Admin Login</h2>
-    <h2 class="text-center">Hong sheng is gay</h2>
     <form id="loginForm" action="admin_login_request.php" method="POST">
       <div class="form-group">
         <label for="username">Admin ID:</label>
