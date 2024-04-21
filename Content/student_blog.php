@@ -37,10 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $post_image = $_FILES['post_image']["name"];
 
     // Validate file type
-    $allowed_extensions = array('png', 'jpeg');
+    $allowed_extensions = array('png', 'jpeg','jpg');
     $file_extension = strtolower(pathinfo($post_image, PATHINFO_EXTENSION));
     if (!in_array($file_extension, $allowed_extensions)) {
-        echo "<script>alert('Only PNG and JPEG files are allowed.')</script>";
+        echo "<script>alert('Only PNG, JPEG and JPG files are allowed.')</script>";
         echo "<script>window.location.href='student_blog.php';</script>"; // Redirect back to the upload page
         exit(); // Stop execution after redirect
     }
