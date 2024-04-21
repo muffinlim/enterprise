@@ -4,7 +4,6 @@ if(!empty($_GET['File_Link'])){
     // get the file name
 $File_Link=basename($_GET['File_Link']);
 $path_store="C:/xampp/htdocs/GitHub/enterprise/download_upload_file/".$File_Link;
-
 if(!empty($File_Link)&&file_exists($path_store)){
 
          header("Cache-Control: public");
