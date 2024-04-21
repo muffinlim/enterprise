@@ -19,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_comment'])) {
 
     // Insert the comment into the database
     session_start();
-    $student_id = $_SESSION['Student_Id'];
-    $sql = "INSERT INTO comment (Blog_Id, Student_Id, Comment_Detail) VALUES ('$blog_id', '$student_id', '$comment_detail')";
+    $Lecturer_Id=$_SESSION['Lecturer_Id'];
+    $sql = "INSERT INTO comment (Blog_Id, Lecturer_Id, Comment_Detail) VALUES ('$blog_id', '$Lecturer_Id', '$comment_detail')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Comment submitted successfully!";

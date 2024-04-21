@@ -20,52 +20,64 @@ if (!isset($_SESSION['Student_Id'])) {
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // Connect to the database
     $host = "localhost";
-   $dbusername = "root";
-   $dbpassword = "";
-   $dbname = "etutoring";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "etutoring";
 
-   $conn = new mysqli($host,$dbusername,$dbpassword,$dbname);
+    $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
-   if($conn -> connect_error){
-       die("Connection Failed: ". $conn -> connect_error);
-   }
+    if ($conn->connect_error) {
+        die("Connection Failed: " . $conn->connect_error);
+    }
 
     // Get form data
     $student_id = $_SESSION['Student_Id'];
-    $lecturer_id = 1; // Assuming lecturer_id is fixed for all students
+    $lecturer_id = 1;
     $blog_post = $_POST['blog_post'];
     $post_image = $_FILES['post_image']["name"];
-  
 
-    $query=mysqli_query($conn,"select max(Blog_Id) as bid from blog");
-	$result=mysqli_fetch_array($query);
-	 $blogid=$result['bid']+1;
-	$dir="uploads/$blogid";
-if(!is_dir($dir)){
-		mkdir("uploads/".$blogid);
-	}
+    // Validate file type
+    $allowed_extensions = array('png', 'jpeg');
+    $file_extension = strtolower(pathinfo($post_image, PATHINFO_EXTENSION));
+    if (!in_array($file_extension, $allowed_extensions)) {
+        echo "<script>alert('Only PNG and JPEG files are allowed.')</script>";
+        echo "<script>window.location.href='student_blog.php';</script>"; // Redirect back to the upload page
+        exit(); // Stop execution after redirect
+    }
 
-    move_uploaded_file($_FILES["post_image"]["tmp_name"],"uploads/$blogid/$post_image");
+    // Get the maximum Blog_Id from the database and increment it by one
+    $query = mysqli_query($conn, "SELECT MAX(Blog_Id) AS max_blog_id FROM blog");
+    $result = mysqli_fetch_array($query);
+    $next_blog_id = $result['max_blog_id'] + 1;
 
-    $sql = mysqli_query($conn, "INSERT INTO blog (Student_Id, Lecturer_Id, Date, Blog_Post, Post_Image) VALUES ('$student_id', '$lecturer_id', NOW() , '$blog_post', '$post_image')");
+    // Process file upload
+    $dir = "uploads/$next_blog_id";
+    if (!is_dir($dir)) {
+        mkdir($dir);
+    }
+    move_uploaded_file($_FILES["post_image"]["tmp_name"], "$dir/$post_image");
 
-    $_SESSION['msg']="Blog upload Successfully !!";
+    // Insert data into database
+    $sql = mysqli_query($conn, "INSERT INTO blog (Blog_Id, Student_Id, Lecturer_Id, Date, Blog_Post, Post_Image) VALUES ('$next_blog_id', '$student_id', '$lecturer_id', NOW(), '$blog_post', '$post_image')");
 
+    $_SESSION['msg'] = "Blog upload Successfully !!";
 }
 
 // Check if the student wants to delete a blog
+
+
 if (isset($_POST['delete']) && isset($_POST['blog_id'])) {
     // Connect to the database
     $host = "localhost";
-   $dbusername = "root";
-   $dbpassword = "";
-   $dbname = "etutoring";
+    $dbusername = "root";
+    $dbpassword = "";
+    $dbname = "etutoring";
 
-   $conn = new mysqli($host,$dbusername,$dbpassword,$dbname);
+    $conn = new mysqli($host, $dbusername, $dbpassword, $dbname);
 
-   if($conn -> connect_error){
-       die("Connection Failed: ". $conn -> connect_error);
-   }
+    if ($conn->connect_error) {
+        die("Connection Failed: " . $conn->connect_error);
+    }
 
     // Get blog id and student id
     $blog_id = $_POST['blog_id'];
@@ -77,9 +89,39 @@ if (isset($_POST['delete']) && isset($_POST['blog_id'])) {
     $stmt->bind_param("ii", $blog_id, $student_id);
     $stmt->execute();
 
+    // Check if any row was affected (i.e., if the blog was deleted)
+    if ($stmt->affected_rows > 0) {
+        // Delete the folder corresponding to the blog ID
+        deleteBlogFolder($blog_id);
+        $_SESSION['msg'] = "Blog deleted successfully!";
+    } else {
+        $_SESSION['msg'] = "Failed to delete blog. Make sure you are the owner.";
+    }
+
     $stmt->close();
     $conn->close();
 }
+
+// Delete function for deleting the folder corresponding to the blog ID
+function deleteBlogFolder($blogid) {
+    $dir = "uploads/$blogid";
+    if (is_dir($dir)) {
+        // Recursively remove the directory and its contents
+        if (file_exists($dir)) {
+            $files = glob($dir . '/*');
+            foreach ($files as $file) {
+                if (is_dir($file)) {
+                    deleteBlogFolder($file);
+                } else {
+                    unlink($file);
+                }
+            }
+            rmdir($dir);
+        }
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -128,22 +170,16 @@ if (isset($_POST['delete']) && isset($_POST['blog_id'])) {
              // Display comments for the blog post
         echo "<h3>Comments:</h3>";
         $blog_id = $row["Blog_Id"];
-        $comment_sql = "SELECT student.Student_Name, comment.Comment_Detail FROM comment JOIN student ON comment.Student_Id = student.Student_Id WHERE comment.Blog_Id = $blog_id";
+        $comment_sql = "SELECT lecturer.Lecturer_Name, comment.Comment_Detail FROM comment JOIN lecturer ON comment.Lecturer_Id = lecturer.Lecturer_Id WHERE comment.Blog_Id = $blog_id";
         $comment_result = $conn->query($comment_sql);
         if ($comment_result->num_rows > 0) {
             while ($comment_row = $comment_result->fetch_assoc()) {
-                echo "<p><strong>" . $comment_row["Student_Name"] . ":</strong> " . $comment_row["Comment_Detail"] . "</p>";
+                echo "<p><strong>" . $comment_row["Lecturer_Name"] . ":</strong> " . $comment_row["Comment_Detail"] . "</p>";
             }
         } else {
             echo "<p>No comments yet.</p>";
         }
             
-
-        echo "<form method='POST' action='submit_comment.php'>";
-        echo "<input type='hidden' name='blog_id' value='" . $row["Blog_Id"] . "'>";
-        echo "<textarea name='comment' placeholder='Enter your comment'></textarea><br>";
-        echo "<button type='submit' name='submit_comment'>Submit Comment</button>";
-        echo "</form>";
 
         
             // Display delete button for the student's own blogs

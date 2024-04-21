@@ -51,6 +51,27 @@ if ($result->num_rows > 0) {
     echo "None program enrolled.";
 }
 
+$sql2 = "SELECT m.meeting_id, t.start_time, l.Lecturer_Name
+        FROM meeting m
+        INNER JOIN time_slot t ON m.time_slot_id = t.time_slot_id
+        INNER JOIN lecturer l ON t.lecture_id = l.Lecturer_Id
+        WHERE m.student_id = ?";
+$stmt = $conn->prepare($sql2);
+$stmt->bind_param("i", $Student_Id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    // Output the meetings
+    echo "<h5 class='card-title'>Meetings Planned:</h5>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<p class='card-text'>Meeting ID: " . $row["meeting_id"] . "<br>";
+        echo "Start Time: " . $row["start_time"] . "<br>";
+        echo "With Lecturer: " . $row["Lecturer_Name"] . "</p>";
+    }
+} else {
+    echo "<p class='card-text'>No meetings planned.</p>";
+}
 ?>
 
 
