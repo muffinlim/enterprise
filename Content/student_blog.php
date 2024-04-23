@@ -32,7 +32,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     // Get form data
     $student_id = $_SESSION['Student_Id'];
-    $lecturer_id = 1;
     $blog_post = $_POST['blog_post'];
     $post_image = $_FILES['post_image']["name"];
 
@@ -58,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     move_uploaded_file($_FILES["post_image"]["tmp_name"], "$dir/$post_image");
 
     // Insert data into database
-    $sql = mysqli_query($conn, "INSERT INTO blog (Blog_Id, Student_Id, Lecturer_Id, Date, Blog_Post, Post_Image) VALUES ('$next_blog_id', '$student_id', '$lecturer_id', NOW(), '$blog_post', '$post_image')");
+    $sql = mysqli_query($conn, "INSERT INTO blog (Blog_Id, Student_Id, Date, Blog_Post, Post_Image) VALUES ('$next_blog_id', '$student_id', NOW(), '$blog_post', '$post_image')");
 
     $_SESSION['msg'] = "Blog upload Successfully !!";
 }
