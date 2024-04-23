@@ -43,39 +43,50 @@ $groupResult = $groupStmt->get_result();
 <body>
 <div class="container mt-4">
     <div class="row">
-        <div class="col-md-6">
-            <div class="card bg-info">
-                <div class="card-header text-white">
-                    <h3 class="mb-0">Blog Notifications</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <?php if ($blogResult->num_rows > 0) : ?>
-                        <?php while ($row = $blogResult->fetch_assoc()) : ?>
-                            <li class="list-group-item">Student post blog: '<?php echo $row['Student_Name']; ?>' posted a new blog.</li>
-                        <?php endwhile; ?>
-                    <?php else : ?>
-                        <li class="list-group-item">No new blog posts.</li>
-                    <?php endif; ?>
-                </ul>
-            </div>
+    <div class="col-md-6">
+    <div class="card bg-info">
+        <div class="card-header text-white">
+            <h3 class="mb-0">Blog Notifications</h3>
         </div>
-        <div class="col-md-6">
-            <div class="card bg-warning">
-                <div class="card-header text-white">
-                    <h3 class="mb-0">Comment Notifications</h3>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <?php if ($commentResult->num_rows > 0) : ?>
-                        <?php while ($row = $commentResult->fetch_assoc()) : ?>
-                            <li class="list-group-item">Lecturer post comment: '<?php echo $row['Lecturer_Name']; ?>' replied in the comments.</li>
-                        <?php endwhile; ?>
-                    <?php else : ?>
-                        <li class="list-group-item">No new comments.</li>
-                    <?php endif; ?>
-                </ul>
-            </div>
-        </div>
+        <ul class="list-group list-group-flush">
+            <?php 
+            $count = 0;
+            while ($count < 5 && ($row = $blogResult->fetch_assoc())) : 
+                ?>
+                <li class="list-group-item">Student post blog: '<?php echo $row['Student_Name']; ?>' posted a new blog.</li>
+                <?php 
+                $count++;
+            endwhile; 
+            ?>
+            <?php if ($blogResult->num_rows === 0 || $count === 0) : ?>
+                <li class="list-group-item">No new blog posts.</li>
+            <?php endif; ?>
+        </ul>
     </div>
+</div>
+
+<div class="col-md-6">
+    <div class="card bg-warning">
+        <div class="card-header text-white">
+            <h3 class="mb-0">Comment Notifications</h3>
+        </div>
+        <ul class="list-group list-group-flush">
+            <?php 
+            $count = 0;
+            while ($count < 5 && ($row = $commentResult->fetch_assoc())) : 
+                ?>
+                <li class="list-group-item">Lecturer post comment: '<?php echo $row['Lecturer_Name']; ?>' replied in the comments.</li>
+                <?php 
+                $count++;
+            endwhile; 
+            ?>
+            <?php if ($commentResult->num_rows === 0 || $count === 0) : ?>
+                <li class="list-group-item">No new comments.</li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</div>
+
 
     <div class="row mt-4">
         <div class="col-md-12">
