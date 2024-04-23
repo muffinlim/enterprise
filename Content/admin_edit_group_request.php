@@ -39,6 +39,7 @@ if(isset($_POST['submit'])) {
 
             if (mysqli_num_rows($resultsqlSelectStudentInGroup) <1) {
                 $sql = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer_id')";
+
                 if (mysqli_query($conn, $sql)) {
                     // Get student's email and name
                     $studentInfoQuery = "SELECT s.Email AS Student_Email, s.Student_Name, l.Lecturer_Name FROM student s
@@ -74,18 +75,17 @@ if(isset($_POST['submit'])) {
                     header("location:admin_group.php?success=Updated student list to lecturer successfully!".$student_id);
                 } 
             } else {
-                echo $student_id."/n";
                 $sqlDeleteOldGroup2 = "DELETE FROM group_student_lecturer WHERE Student_Id='$student_id'";
                 mysqli_query($conn, $sqlDeleteOldGroup2);
-                $sqlDeleteOldGroup = "DELETE FROM group_student_lecturer WHERE Lecturer_Id='$lecturer_id'";
-                mysqli_query($conn, $sqlDeleteOldGroup);
 
                 $sqlInsertNewGroup = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer_id')";
                 if (mysqli_query($conn, $sqlInsertNewGroup)) {
                     header("location:admin_group.php?success=Updated student list to lecturer successfully!");
                 }
+
             }
         }
+
     } 
 
 ?>
