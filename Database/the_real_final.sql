@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 23, 2024 at 03:12 AM
+-- Generation Time: Apr 23, 2024 at 05:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,6 @@ INSERT INTO `admin_account` (`Admin_Id`, `Admin_Login_Id`, `Admin_Password`, `Ad
 CREATE TABLE `blog` (
   `Blog_Id` int(11) NOT NULL,
   `Student_Id` int(11) NOT NULL,
-  `Lecturer_Id` int(11) NOT NULL,
   `Date` datetime NOT NULL,
   `Blog_Post` varchar(255) NOT NULL,
   `Post_Image` varchar(255) NOT NULL
@@ -60,9 +59,9 @@ CREATE TABLE `blog` (
 -- Dumping data for table `blog`
 --
 
-INSERT INTO `blog` (`Blog_Id`, `Student_Id`, `Lecturer_Id`, `Date`, `Blog_Post`, `Post_Image`) VALUES
-(1, 3, 1, '2024-04-22 13:09:17', 'test', 'Screenshot 2021-05-11 005046.png'),
-(2, 2, 1, '2024-04-23 08:58:22', 'test', 'Screenshot 2023-03-16 222413.png');
+INSERT INTO `blog` (`Blog_Id`, `Student_Id`, `Date`, `Blog_Post`, `Post_Image`) VALUES
+(1, 6, '2024-04-23 23:04:28', 'Girl', 'WhatsApp Image 2021-03-24 at 3.41.40 PM.jpeg'),
+(2, 6, '2024-04-23 23:04:48', 'Muffin', 'muffin1.jpg');
 
 -- --------------------------------------------------------
 
@@ -82,9 +81,8 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`Comment_Id`, `Lecturer_Id`, `Blog_Id`, `Comment_Detail`) VALUES
-(12, 2, 1, 'I like it.'),
-(13, 2, 1, 'We should add this as the IT club shirt.'),
-(14, 2, 1, 'Lets make a polling for all the designs.');
+(27, 4, 2, 'I like Muffin'),
+(28, 4, 1, 'I Like Girls');
 
 -- --------------------------------------------------------
 
@@ -125,8 +123,16 @@ CREATE TABLE `group_student_lecturer` (
 --
 
 INSERT INTO `group_student_lecturer` (`Group_Id`, `Student_Id`, `Lecturer_Id`) VALUES
-(3, 2, 1),
-(17, 4, 2);
+(21, 5, 4),
+(22, 6, 5),
+(23, 7, 5),
+(29, 8, 6),
+(30, 9, 6),
+(31, 10, 6),
+(331, 21, 9),
+(334, 11, 3),
+(335, 12, 3),
+(336, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +155,11 @@ CREATE TABLE `lecturer` (
 
 INSERT INTO `lecturer` (`Lecturer_Id`, `Program_Id`, `Lecturer_Login_Id`, `Lecturer_Password`, `Lecturer_Name`, `Email`) VALUES
 (1, 1, 'XXXX-1900584', '$2y$10$SonMoi9/aivUYj40aTRaQePyeglLvtsbEq0OFOmgMBHiYLwEbU3qS', 'MR Lim', 'MRLim@gmail.com'),
-(2, 2, 'SCPG-1800141', '$2y$10$nyxfQP3jYVevU2Ph048j5OZBAH5/rIQp5yXSA3vY5ZqrMn4I0mTJC', 'Muffin Lim', 'limyongkhang@gmail.com');
+(3, 1, 'SCPG-1000100', '$2y$10$9HVT4mr0zHvcY4BYOrdyC.K4yf0FxdG71lrRnGo4sapuyPGCReap2', 'Mr. Ang', 'ang@gmail.com'),
+(4, 2, 'SCPG-2000200', '$2y$10$S9UUpa2Y8sAv6fvHwJK2KeCKET0tJIesValoGb7OSJ3wnIRUXgg2i', 'Mr. Nerdy', 'nerdy@gmail.com'),
+(5, 2, 'SCPG-2000201', '$2y$10$8l5CBLCqtGIYhBNljUPbfesZ0oLzza3y1PCWeKl1SxtAURzQY1Okm', 'Taylor', 'taylor@gmail.com'),
+(6, 3, 'SCPG-3000300', '$2y$10$wK6jG6hTBZCrow1WiTxNYe3lhgpdYNHZgDiUFYpOiqrsoLeeClvdG', 'Ms. Jennifer', 'jennifer@gmail.com'),
+(9, 1, 'SCPG-2000068', '$2y$10$XtEUvXVZvDVwwuqP0.XWueqtT173/fTXqE0xkv1HfRat1y7XAJGX.', 'Mr.Shahidh', 'gshop0808@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -171,8 +181,13 @@ CREATE TABLE `meeting` (
 --
 
 INSERT INTO `meeting` (`meeting_id`, `student_id`, `time_slot_id`, `meeting_link`, `created_at`, `recorded_meeting_link`) VALUES
-(10, 3, 4, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:46', NULL),
-(11, 3, 5, 'https://meet.google.com/kyx-spzi-drj', '2024-04-01 06:17:50', 'https://www.youtube.com/watch?v=ImtZ5yENzgE');
+(12, 5, 13, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:39:03', NULL),
+(13, 5, 9, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:39:12', NULL),
+(14, 6, 14, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:39:26', NULL),
+(15, 7, 8, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:39:39', 'https://www.youtube.com/watch?v=ImtZ5yENzgE'),
+(16, 8, 6, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:39:51', NULL),
+(17, 11, 11, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:40:20', 'https://www.youtube.com/watch?v=ImtZ5yENzgE'),
+(18, 12, 12, 'https://meet.google.com/kyx-spzi-drj', '2024-04-21 14:40:33', 'https://www.youtube.com/watch?v=ImtZ5yENzgE');
 
 -- --------------------------------------------------------
 
@@ -215,8 +230,15 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`Student_Id`, `Program_Id`, `Student_Login_Id`, `Student_Password`, `Student_Name`, `Email`) VALUES
 (2, 1, 'XXXX-1900584', '$2y$10$meAnr35Ba8X.xlpR1EiXkOsi0IolimoaBeXENGheeDlKAcRFVCf12', 'Muffim', 'Muffim2@gmail.com'),
-(3, 2, 'SCPG-1314520', '$2y$10$1y9ZxFM04qc6goASLw/KpegBZwX/TbENTcLz/VE7zSYpKuTgJab.C', 'Clover0510', 'clover0510love@gmail.com'),
-(4, 2, 'SCPG-1900714', '$2y$10$PNmJJXK6y613eTv.E3ZseeQBPgSXeFaCTDtwZ.//IypuXd9ne8fdS', 'Hakimi', 'limmuffin0510@gmail.com');
+(5, 2, 'SCPG-1800141', '$2y$10$RMIUGVQSY8BeZOTo99cb2uzV5p.HihhZ2RKhQvr/rSsPLJOGGq/hG', 'Peter', 'peter@gmail.com'),
+(6, 2, 'SCPG-1314520', '$2y$10$ASINKj5OpwIEzMalJ276puUKLJNI0ocHsd5V8.vtgcfVhUCY.GxbS', 'Jane', 'jane@gmail.com'),
+(7, 2, 'SCPG-1900714', '$2y$10$weCMbiasCDjahsQwAyqIK.SHwr0qwjFn.RSfgCvuiAu.XcPnJ0t1.', 'Joshua', 'joshua@gmail.com'),
+(8, 3, 'SCPG-1800999', '$2y$10$NGC5jakjTp9WF6UqupjLA.IeYniPCoHFyIwYAOFOKSxkP0BK/vSLS', 'Kelvin', 'kelvin@gmail.com'),
+(9, 3, 'SCPG-1900798', '$2y$10$zKeHnv93UlTcpurUJ0bOQOJ/BDXVEwdyIjwlmsR540TEWQltKrX22', 'Derrick', 'derrick@gmail.com'),
+(10, 3, 'SCPG-1700584', '$2y$10$EsjJDSXzAINHAj/uVFUe3.ZnuzYoR1m8sxzG.i5TXZIwo5GvnexQG', 'Elyn', 'elyn@gmail.com'),
+(11, 1, 'SCPG-1700333', '$2y$10$H.G7YpcEKsqxkT2bD5HG.ePGRF2KONSIDWfXmEb8frTdI3vfDYGyy', 'Jamie', 'jamie@gmail.com'),
+(12, 1, 'SCPG-1800666', '$2y$10$o5jG6MImfxsvJ16NhbZpdeykTZxY4gl0nqePXF6ndj8yN3MQOPrBi', 'Lizzy', 'lizzy@gmail.com'),
+(21, 1, 'SCPG-2000067', '$2y$10$2oMt9ugW2IObnVFnHaDucOBMX5DZqWOKd6gmYmTG1cSYoN8ck/Prq', 'Tang Hong Sheng', '1991ahming@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -236,8 +258,15 @@ CREATE TABLE `time_slot` (
 --
 
 INSERT INTO `time_slot` (`time_slot_id`, `lecture_id`, `start_time`, `end_time`) VALUES
-(4, 2, '2024-04-01 17:00:00', '2024-04-01 17:30:00'),
-(5, 2, '2024-04-01 19:00:00', '2024-04-01 19:30:00');
+(6, 6, '2024-04-27 17:39:00', '2024-04-27 18:33:00'),
+(7, 5, '2024-04-28 13:34:00', '2024-04-28 14:34:00'),
+(8, 5, '2024-04-29 11:34:00', '2024-04-29 12:34:00'),
+(9, 4, '2024-04-29 22:35:00', '2024-04-29 23:35:00'),
+(10, 3, '2024-04-28 22:36:00', '2024-04-28 23:36:00'),
+(11, 3, '2024-04-28 14:37:00', '2024-04-28 15:36:00'),
+(12, 3, '2024-04-28 16:40:00', '2024-04-28 17:40:00'),
+(13, 4, '2024-04-30 13:40:00', '2024-04-30 14:37:00'),
+(14, 5, '2024-04-26 20:38:00', '2024-04-26 22:40:00');
 
 --
 -- Indexes for dumped tables
@@ -254,8 +283,7 @@ ALTER TABLE `admin_account`
 --
 ALTER TABLE `blog`
   ADD PRIMARY KEY (`Blog_Id`),
-  ADD KEY `FK_Blog_Student_Id` (`Student_Id`),
-  ADD KEY `FK_Blog_Lecturer_Id` (`Lecturer_Id`);
+  ADD KEY `FK_Blog_Student_Id` (`Student_Id`);
 
 --
 -- Indexes for table `comment`
@@ -329,37 +357,37 @@ ALTER TABLE `admin_account`
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `Blog_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Blog_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `Comment_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Comment_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `file_management`
 --
 ALTER TABLE `file_management`
-  MODIFY `File_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `File_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `group_student_lecturer`
 --
 ALTER TABLE `group_student_lecturer`
-  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `Group_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
 
 --
 -- AUTO_INCREMENT for table `lecturer`
 --
 ALTER TABLE `lecturer`
-  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Lecturer_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `meeting`
 --
 ALTER TABLE `meeting`
-  MODIFY `meeting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `meeting_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `program`
@@ -371,13 +399,13 @@ ALTER TABLE `program`
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Student_Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `time_slot`
 --
 ALTER TABLE `time_slot`
-  MODIFY `time_slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `time_slot_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
@@ -387,7 +415,6 @@ ALTER TABLE `time_slot`
 -- Constraints for table `blog`
 --
 ALTER TABLE `blog`
-  ADD CONSTRAINT `FK_Blog_Lecturer_Id` FOREIGN KEY (`Lecturer_Id`) REFERENCES `lecturer` (`Lecturer_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_Blog_Student_Id` FOREIGN KEY (`Student_Id`) REFERENCES `student` (`Student_Id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
