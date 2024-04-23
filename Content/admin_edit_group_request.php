@@ -22,7 +22,6 @@ if(isset($_POST['submit'])) {
     // Initialize PHPMailer
     $mail = new PHPMailer(true);
 
-    try {
         $mail->SMTPDebug = 0;
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
@@ -38,7 +37,7 @@ if(isset($_POST['submit'])) {
             $sqlSelectStudentInGroup = "SELECT * FROM group_student_lecturer WHERE Student_Id='$student_id'";
             $resultsqlSelectStudentInGroup = mysqli_query($conn, $sqlSelectStudentInGroup);
 
-            if (mysqli_num_rows($resultsqlSelectStudentInGroup) < 1) {
+            if (mysqli_num_rows($resultsqlSelectStudentInGroup) <1) {
                 $sql = "INSERT INTO group_student_lecturer (Student_Id, Lecturer_Id) VALUES ('$student_id', '$lecturer_id')";
                 if (mysqli_query($conn, $sql)) {
                     // Get student's email and name
@@ -72,9 +71,10 @@ if(isset($_POST['submit'])) {
                     $mail->Body = $lecturerMessage;
                     $mail->send();
 
-                    header("location:admin_group.php?success=Updated student list to lecturer successfully!");
+                    header("location:admin_group.php?success=Updated student list to lecturer successfully!".$student_id);
                 } 
             } else {
+                echo $student_id."/n";
                 $sqlDeleteOldGroup2 = "DELETE FROM group_student_lecturer WHERE Student_Id='$student_id'";
                 mysqli_query($conn, $sqlDeleteOldGroup2);
                 $sqlDeleteOldGroup = "DELETE FROM group_student_lecturer WHERE Lecturer_Id='$lecturer_id'";
@@ -86,8 +86,6 @@ if(isset($_POST['submit'])) {
                 }
             }
         }
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
-}
+    } 
+
 ?>
